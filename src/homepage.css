@@ -29,12 +29,12 @@
 .overlay{
     position: absolute;
     left: 20%;
-    bottom: -500%;
-    height: 50vh;
+    bottom: -700%;
+    height: 70vh;
     width: 60vw;
     border: 3px rgb(0, 0, 0) solid;
     border-radius: 3rem;
-    background-color: #f0ce90;
+    background-color: #422b03;
 }
 
 .x{
@@ -49,8 +49,20 @@
 .choosing{
     display: flex;
     position: sticky;
+    column-gap: 5%;
     width: 90%;
     padding-left: 5%;
+
+}
+
+.poster {
+    background-color: #f0ce8f;
+    padding: 2%;
+    color: black;
+}
+
+.poster:hover {
+    border: 4px solid red;
 }
 
 .choices{
