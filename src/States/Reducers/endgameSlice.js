@@ -1,0 +1,22 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+    gameState: "",
+    gameOver: Boolean
+};
+
+
+const gameOverState = createSlice({
+    name: "GameState",
+    initialState,
+    reducers: {
+        finishGame: (state, action) => {
+            // when game over => show result screen and options
+            state.gameState = action.payload; // PAYLOAD SHOULD GIVE PROPER GAME STATE VALUE (lose or win)
+        }
+    }
+});
+
+
+export const {finishGame} = gameOverState.actions;
+export default gameOverStateSlice.reducer;
