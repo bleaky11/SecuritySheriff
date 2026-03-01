@@ -13,18 +13,22 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { startgame } from "./Reducers/";
+import  { startGame }   from "./Reducers/startSlice.tsx";
 
-import { startInvestigate, setInvesTarget } from './Reducers/investigateSlice';
-import { Shoot, SetDamage, SetShootingTarget } from './Reducers/shootSlice';
-import { passEnemy, SetPassTarget } from './Reducers/passSlice';
+import { startInvestigate, setInvesTarget } from './Reducers/investigateSlice.tsx';
+import { Shoot, SetDamage, SetShootingTarget } from './Reducers/shootSlice.tsx';
+import { passEnemy, SetPassTarget } from './Reducers/passSlice.tsx';
 
-import { finishGame } from './Reducers/passSlice';
+import { finishGame } from './Reducers/endgameSlice.tsx';
 
 const dispatch = useDispatch();
 
 const [startState, setStartState] = useState(false);
-const [investigateState, setInvesState] = useState("");
+const [investigateState, setInvesState] = useState(false);
+const [shootState, setShootState] = useState(false);
+const [passState, setPassState] = useState(false);
+const [endState, setEndState] = useState(false);
+
 
 interface character // testing only - can put definition somewhere else
 {
@@ -35,7 +39,7 @@ interface character // testing only - can put definition somewhere else
 
 const StartGame = () => 
 {
-    dispatch(startgame(startState));
+    dispatch(startGame(startState));
     // call other functions to start other things as well
 }
 
@@ -52,7 +56,7 @@ const ShootCharacter = (chara:character) =>
 
 const PassCharacter = (chara:character) => 
 {
-    dispatch(passEnemy(chara));    
+    dispatch(passEnemy(chara));   
 }
 
 function Verdict()

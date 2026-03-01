@@ -13,7 +13,7 @@ const gameOverState = createSlice({
     reducers: {
         finishGame: (state, action) => {
             // when game over => show result screen and options
-            state.gameState = action.payload; // PAYLOAD SHOULD GIVE PROPER GAME STATE VALUE (lose or win)
+            state.gameOver = action.payload; // PAYLOAD SHOULD GIVE PROPER GAME STATE VALUE (lose or win)
         }
     }
 });

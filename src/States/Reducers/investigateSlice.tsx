@@ -21,7 +21,7 @@ const investigationState = createSlice({
                 health: action.payload.health,
                 type: action.payload.type
             }
-            Entity = otherEntity;
+            state.Entity = otherEntity;
         }
     }
 });

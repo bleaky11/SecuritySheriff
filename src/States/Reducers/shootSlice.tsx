@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    damage: Number,
+    damage: 0,
     Entity: {name: "", health: 0, type: "Enemy"}
 };
 
@@ -14,10 +14,10 @@ const shootState = createSlice({
             const otherEntity = 
             {
                 name: action.payload.name,
-                health: (action.payload.health - damage),
+                health: (action.payload.health - state.damage),
                 type: action.payload.type
             };
-            Entity = otherEntity;
+            state.Entity = otherEntity;
         },
         SetDamage: (state, action) => {
             state.damage = action.payload;
@@ -29,7 +29,7 @@ const shootState = createSlice({
                 health: action.payload.health,
                 type: action.payload.type
             };
-            Entity = otherEntity;
+            state.Entity = otherEntity;
         }
     }
 })

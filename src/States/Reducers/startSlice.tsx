@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = {
-    gameStarted: Boolean,
+    gameStarted: Boolean
 };
+
 
 
 const startState = createSlice({

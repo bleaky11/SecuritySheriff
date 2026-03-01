@@ -18,7 +18,7 @@ const passState = createSlice({
                 health: action.payload.health,
                 type: action.payload.type
             };
-            Entity = otherEntity;
+            state.Entity = otherEntity;
         },
         SetPassTarget: (state, action) => {
             const otherEntity = 
@@ -27,11 +27,11 @@ const passState = createSlice({
                 health: action.payload.health,
                 type: action.payload.type
             };
-            Entity = otherEntity;
+            state.Entity = otherEntity;
         }
     }
 });
 
 
 export const { passEnemy, SetPassTarget } = passState.actions;
-export default passState.reducers;
+export default passState.reducer;
