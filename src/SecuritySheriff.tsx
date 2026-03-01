@@ -8,6 +8,8 @@ import "./App.css"
 import "./SecuritySheriff.css"
 import { useEffect, useState } from "react"
 import Verdict from "./verdict"
+import { ScriptInterface } from "./components/script-components/script-interface/script-interface"
+import type { Script } from "./data/models"
 
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
@@ -23,6 +25,15 @@ export default function SecuritySheriff() {
     const [list, setList] = useState<string>("");
     const [listOpen, setOpen] = useState<boolean>(false);
     const [tabOne, setTab] = useState<boolean>(true);
+
+    const fakeScript: Script ={
+        containsError: true,
+        scriptContent: "main()\n{\n\tprint(\Hello World\");\n}\n",
+        scriptLineLength: 44,
+        errors: [{line:3, description:"Missing a quotation mark", fix:"Add a quotation mark", errorType:"syntax"}],
+        language: "C",
+        context:" "
+    }
 
 
     function verdictButton(){
@@ -53,7 +64,7 @@ export default function SecuritySheriff() {
                 <button className={tabOne? "listTabs selected" : "listTabs"} onClick={()=>{setTab(true)}}>Outlaw Info</button>
                 <button className={tabOne? "listTabs" : "listTabs selected"} onClick={()=>{setTab(false)}}>Town Info</button>
                 {tabOne && <div className="Information">
-                    This guy is evil
+                    <ScriptInterface script={fakeScript}></ScriptInterface>
                 </div>}
                 {!tabOne && <div className="Information">
                     This town is evil
