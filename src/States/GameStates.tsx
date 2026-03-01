@@ -75,15 +75,15 @@ export function useGameStateMachine() {
         dispatch(SetPassTarget(entity));
     };
 
-    const  selectDifficulty = (change: boolean) => {
+    const  selectDifficulty = (change: any) => {
         dispatch(SelectDifficulty(change));
     };
 
-    const  selectBounty = (change: boolean) => {
+    const  selectBounty = (change: any) => {
         dispatch(SelectBounty(change));
     };
 
-    const  selectLanguage = (change: boolean) => {
+    const  selectLanguage = (change: any) => {
         dispatch(SelectLanguage(change));
     };
 
