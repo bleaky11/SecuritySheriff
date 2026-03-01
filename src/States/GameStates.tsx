@@ -9,6 +9,42 @@
     - Game Over (2 stages) ->
         - Win (Show win screen -> play again, main menu (reset game))
         - Lose (Show lose screen -> try again, main menu (reset game))
-
 */
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { startgame } from "./Reducers/startSlice";
+
+const dispatch = useDispatch();
+
+const [startState, setStartState] = useState(false);
+const [investigateState, setInvesState] = useState("");
+
+const StartGame = () => 
+{
+    dispatch(startgame(startState));
+    // call other functions to start other things as well
+}
+
+function Verdict()
+{
+    // Once button is clicked function should:
+    //  - Display 'Shoot' and 'Pass' buttons
+    
+}
+
+function ShowHideRegistry()
+{
+    // Once button is clicked function should:
+    //  - display the town registry output list
+    //  - Be able to toggle view of list
+}
+
+function ShowHidePermit()
+{
+    // function should:
+    //  - display current enemy profile
+    //  - toggle view of profile
+}
+
+
 

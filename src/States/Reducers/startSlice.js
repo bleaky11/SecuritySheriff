@@ -11,6 +11,7 @@ const startState = createSlice({
     reducers: {
         startGame: (state, action) => {
             // start dialogue, play animations, reload AI output
+            state.gameStarted = action.payload;
         }
     }
 });

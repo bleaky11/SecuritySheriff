@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     started: Boolean,
-
+    
 };
 
 
@@ -11,12 +11,12 @@ const investigationState = createSlice({
     name: "Investigation",
     initialState,
     reducers: {
-        investigate: (state, action) => {
-            // placeholder function
+        startInvestigate: (state, action) => {
+            // should make all of the buttons available on screen
         }
     }
 });
 
 
-export const {investigate} = gameOverState.actions;
+export const { startInvestigate } = investigationState.actions;
 export default investigationState.reducer;

@@ -19,4 +19,4 @@ const gameOverState = createSlice({
 
 
 export const {finishGame} = gameOverState.actions;
-export default gameOverStateSlice.reducer;
+export default gameOverState.reducer;
