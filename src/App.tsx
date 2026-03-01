@@ -3,15 +3,12 @@ import "./homepage.css"
 import wildWest from "./assets/wild-west-town-vector-background-photo-realistic-56781539.png"
 import { useState } from 'react';
 
-type difficulty = "easy" | "medium" | "hard";
-
 function App() {
   const [overLay, setOverlay] = useState<boolean>(false);
   function triggerOver(){
     setOverlay(!overLay);
     console.log("Hello, I am from the triggerOver function!");
   }
-  const [difficulty, setDifficulty] = useState<difficulty>("easy");
 
   return (
     <div className='home'>
@@ -20,7 +17,7 @@ function App() {
         Security Sheriff
       </h1>
       <div className='homeScreen'>
-        {overLay /*&& <DifficultyOverlay difficulty={difficulty} setDifficulty={setDifficulty} setOverlay={triggerOver}></DifficultyOverlay>*/}
+        {overLay && /*<SettingsOverlay setOverlay={triggerOver}></SettingsOverlay>*/}
         <button onClick={triggerOver}>Start Game</button>
       </div>
     </div>
