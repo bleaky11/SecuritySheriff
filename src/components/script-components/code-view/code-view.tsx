@@ -18,9 +18,15 @@ export function CodeViewer({script} : {script : Script}) : JSX.Element{
         })
 
         if (isError.length === 0) {
-            console.log(`Line${line} is not an error`)
+            console.log("No errors here");
+            return(
+                <div style={{color:"purple"}}>{`Line${line} is not an error`}</div>
+            )
         } else {
-            console.log(isError[0]);
+            console.log("Error found");
+            return (
+                <div>{isError[0].description}</div>
+            )
         }
     }
 

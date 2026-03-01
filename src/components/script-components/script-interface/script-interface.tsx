@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Script } from "../../../data/models";
+import { CodeViewer } from "../code-view/code-view";
 
 export interface ScriptInterfaceProps {
     script : Script
@@ -13,7 +14,7 @@ export function ScriptInterface({script} : ScriptInterfaceProps) {
     return (
         <div>
             <button onClick={() => setDebugMode(!debugMode)}>Toggle Debug Mode</button>
-
+            <CodeViewer script={currentScript}></CodeViewer>
             {debugMode && 
                 <div> 
                     <h2>Debug Information</h2>

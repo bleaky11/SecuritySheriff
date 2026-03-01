@@ -11,6 +11,8 @@ import Verdict from "./verdict"
 import type { Email, CharacterProfile } from "./data/models"
 import { EmailViewer } from "./components/email-components/email-view/email-view"
 import { generate_email, generate_townsfolk, initalize_gemini_api } from "./service/gemini"
+import { ScriptInterface } from "./components/script-components/script-interface/script-interface"
+import type { Script } from "./data/models"
 
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
@@ -52,6 +54,15 @@ export default function SecuritySheriff() {
         }
     )}, 
     []);
+    const fakeScript: Script ={
+        containsError: true,
+        scriptContent: "main()\n{\n\tprint(\Hello World\");\n}\n",
+        scriptLineLength: 44,
+        errors: [{line:3, description:"Missing a quotation mark", fix:"Add a quotation mark", errorType:"syntax"}],
+        language: "C",
+        context:" "
+    }
+
 
     function verdictButton(){
         if(choice === "idle")
