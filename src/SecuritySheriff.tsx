@@ -8,9 +8,14 @@ import "./App.css"
 import "./SecuritySheriff.css"
 import { useEffect, useState } from "react"
 import Verdict from "./verdict"
+<<<<<<< HEAD
 import type { Email, CharacterProfile } from "./data/models"
 import { EmailViewer } from "./components/email-components/email-view/email-view"
 import { generate_email, generate_townsfolk, initalize_gemini_api } from "./service/gemini"
+=======
+import { ScriptInterface } from "./components/script-components/script-interface/script-interface"
+import type { Script } from "./data/models"
+>>>>>>> f998f16996a248211fb3e5bb1a66b72905630b46
 
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
@@ -29,6 +34,7 @@ export default function SecuritySheriff() {
     const [emailInfo, setEmail] = useState<Email>();
     const [townFolks, setTownFolks] = useState<CharacterProfile[]>([]);
 
+<<<<<<< HEAD
     useEffect(()=> {
         initalize_gemini_api().then((response) => {
             if (response) {
@@ -52,6 +58,17 @@ export default function SecuritySheriff() {
         }
     )}, 
     []);
+=======
+    const fakeScript: Script ={
+        containsError: true,
+        scriptContent: "main()\n{\n\tprint(\Hello World\");\n}\n",
+        scriptLineLength: 44,
+        errors: [{line:3, description:"Missing a quotation mark", fix:"Add a quotation mark", errorType:"syntax"}],
+        language: "C",
+        context:" "
+    }
+
+>>>>>>> f998f16996a248211fb3e5bb1a66b72905630b46
 
     function verdictButton(){
         if(choice === "idle")
@@ -81,7 +98,11 @@ export default function SecuritySheriff() {
                 <button className={tabOne? "listTabs selected" : "listTabs"} onClick={()=>{setTab(true)}}>Outlaw Info</button>
                 <button className={tabOne? "listTabs" : "listTabs selected"} onClick={()=>{setTab(false)}}>Town Info</button>
                 {tabOne && <div className="Information">
+<<<<<<< HEAD
                     {emailInfo !== undefined && <EmailViewer email={emailInfo}></EmailViewer> }
+=======
+                    <ScriptInterface script={fakeScript}></ScriptInterface>
+>>>>>>> f998f16996a248211fb3e5bb1a66b72905630b46
                 </div>}
                 {!tabOne && <div className="Information">
                     {townFolks.map((folk, index) => (
