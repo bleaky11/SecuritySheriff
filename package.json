@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "DISABLE_ESLINT_PLUGIN=true vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -19,6 +20,7 @@
     "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.25.6",
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
@@ -30,6 +32,7 @@
     "globals": "^16.5.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "wrangler": "^4.69.0"
   }
 }
