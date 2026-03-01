@@ -30,7 +30,7 @@
     position: absolute;
     left: 20%;
     bottom: -700%;
-    height: 70vh;
+    min-height: 70vh;
     width: 60vw;
     border: 3px rgb(0, 0, 0) solid;
     border-radius: 3rem;
@@ -58,11 +58,19 @@
 .poster {
     background-color: #f0ce8f;
     padding: 2%;
+    border: 2px solid black;
     color: black;
 }
 
 .poster:hover {
-    border: 4px solid red;
+    border: 2px solid red;
+}
+
+.chosen{
+    background-color: #f0ce8f;
+    padding: 2%;
+    border: 2px solid red;
+    color: black;
 }
 
 .choices{
@@ -85,7 +93,7 @@
 
 .buttonlayout{
     width: 60vw;
-    position: absolute;
+    position: relative;
     bottom: 10%;
     display: flex;
     justify-content: center;

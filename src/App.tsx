@@ -11,7 +11,7 @@ function App() {
   function triggerOver(){
     setOverlay(!overLay);
   }
-  const [difficulty, setDifficulty] = useState<difficulty>("easy");
+  const [difficultyType, setDifficulty] = useState<difficulty>("easy");
 
   return (
     <div className='home'>
@@ -20,7 +20,7 @@ function App() {
         Security Sheriff
       </h1>
       <div className='homeScreen'>
-        {overLay && <SettingsOverlay difficulty={difficulty} setDifficulty={setDifficulty} setOverlay={triggerOver}></SettingsOverlay>}
+        {overLay && <SettingsOverlay difficultyType={difficultyType} setDifficulty={setDifficulty} setOverlay={triggerOver}></SettingsOverlay>}
         <button onClick={triggerOver}>Start Game</button>
       </div>
     </div>
