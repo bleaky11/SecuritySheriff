@@ -12,17 +12,47 @@
 */
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { startgame } from "./Reducers/startSlice";
+
+import { startgame } from "./Reducers/";
+
+import { startInvestigate, setInvesTarget } from './Reducers/investigateSlice';
+import { Shoot, SetDamage, SetShootingTarget } from './Reducers/shootSlice';
+import { passEnemy, SetPassTarget } from './Reducers/passSlice';
+
+import { finishGame } from './Reducers/passSlice';
 
 const dispatch = useDispatch();
 
 const [startState, setStartState] = useState(false);
 const [investigateState, setInvesState] = useState("");
 
+interface character // testing only - can put definition somewhere else
+{
+    name: string,
+    health: number,
+    type: string
+};
+
 const StartGame = () => 
 {
     dispatch(startgame(startState));
     // call other functions to start other things as well
+}
+
+const InvestigateTarget = (chara:character) =>
+{
+    dispatch(setInvesTarget(chara));
+}
+
+const ShootCharacter = (chara:character) =>
+{
+    // If we pressed shoot (needs to go through conditions)
+    dispatch(Shoot(chara));
+}
+
+const PassCharacter = (chara:character) => 
+{
+    dispatch(passEnemy(chara));    
 }
 
 function Verdict()
