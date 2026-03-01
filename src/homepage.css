@@ -24,17 +24,26 @@
     height: 100vh;
     width: 100vw;
     justify-content: centered;
+    font-family: western;
+    font-size: 110%;
 }
+
+@font-face {
+    font-family: western;
+    src: url("./assets/WEST____.TTF");
+}
+
 
 .overlay{
     position: absolute;
     left: 20%;
-    bottom: -500%;
-    height: 50vh;
+    bottom: -700%;
+    min-height: 70vh;
     width: 60vw;
     border: 3px rgb(0, 0, 0) solid;
     border-radius: 3rem;
-    background-color: #f0ce90;
+    background-color: #422b03;
+    padding-bottom: 5%;
 }
 
 .x{
@@ -49,8 +58,28 @@
 .choosing{
     display: flex;
     position: sticky;
+    column-gap: 5%;
     width: 90%;
     padding-left: 5%;
+
+}
+
+.poster {
+    background-color: #f0ce8f;
+    padding: 2%;
+    border: 2px solid black;
+    color: black;
+}
+
+.poster:hover {
+    border: 2px solid red;
+}
+
+.chosen{
+    background-color: #f0ce8f;
+    padding: 2%;
+    border: 2px solid red;
+    color: black;
 }
 
 .choices{
@@ -72,9 +101,10 @@
 }
 
 .buttonlayout{
-    width: 60vw;
     position: absolute;
-    bottom: 10%;
+    padding-top: 5%;
+    margin-bottom: 5%;
+    width: 60vw;
     display: flex;
     justify-content: center;
 }
