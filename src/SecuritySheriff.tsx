@@ -10,7 +10,7 @@ import { useEffect, useState } from "react"
 import Verdict from "./verdict"
 import type { Email, CharacterProfile } from "./data/models"
 import { EmailViewer } from "./components/email-components/email-view/email-view"
-import { generate_townsfolk } from "./service/gemini"
+import { generate_email, generate_townsfolk, initalize_gemini_api } from "./service/gemini"
 
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
@@ -29,10 +29,30 @@ export default function SecuritySheriff() {
     const [emailInfo, setEmail] = useState<Email>();
     const [townFolks, setTownFolks] = useState<CharacterProfile[]>([]);
 
-    useEffect(()=>{
-        api
-    })
-    generate_townsfolk(10);
+    useEffect(()=> {
+        initalize_gemini_api().then((response) => {
+            if (response) {
+                generate_townsfolk(10).then((res) => {
+                    if(response){
+                        const parsed = JSON.parse(res.response.text())["Townsfolk"]["people"];
+                        setTownFolks(parsed);
+                        console.log(parsed);      
+                        
+                        generate_email(3, "medium", parsed).then((res) => {
+                            if(res){
+                                const parsedEmail = JSON.parse(res.response.text());
+                                setEmail(parsedEmail);
+                                console.log(parsedEmail);
+                            }
+                        })
+                    }
+                }
+                )
+            }
+        }
+    )}, 
+    []);
+
     function verdictButton(){
         if(choice === "idle")
             setChoice("deciding");
@@ -61,10 +81,14 @@ export default function SecuritySheriff() {
                 <button className={tabOne? "listTabs selected" : "listTabs"} onClick={()=>{setTab(true)}}>Outlaw Info</button>
                 <button className={tabOne? "listTabs" : "listTabs selected"} onClick={()=>{setTab(false)}}>Town Info</button>
                 {tabOne && <div className="Information">
-                    <EmailViewer></EmailViewer>
+                    {emailInfo !== undefined && <EmailViewer email={emailInfo}></EmailViewer> }
                 </div>}
                 {!tabOne && <div className="Information">
-                    This town is evil
+                    {townFolks.map((folk, index) => (
+                        <div key={index}>
+                            <span> {folk.firstName} {folk.lastName} {folk.occupation} {folk.characterTraits.join(", ")}</span>
+                        </div>
+                    ))}
                 </div>}
             </div>
         )
