@@ -14,6 +14,9 @@ const gameOverState = createSlice({
         finishGame: (state, action) => {
             // when game over => show result screen and options
             state.gameOver = action.payload; // PAYLOAD SHOULD GIVE PROPER GAME STATE VALUE (lose or win)
+        },
+        setEndGameTarget: (state, action) => {
+            state.Entity = action.payload;
         }
     }
 });

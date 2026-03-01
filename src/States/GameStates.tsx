@@ -10,24 +10,30 @@
         - Win (Show win screen -> play again, main menu (reset game))
         - Lose (Show lose screen -> try again, main menu (reset game))
 */
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "./hooks.tsx";
 
 import  { startGame }   from "./Reducers/startSlice.tsx";
 
 import { startInvestigate, setInvesTarget } from './Reducers/investigateSlice.tsx';
 import { Shoot, SetDamage, SetShootingTarget } from './Reducers/shootSlice.tsx';
+import { Selection } from './Reducers/selectionSlice.tsx';
 import { passEnemy, SetPassTarget } from './Reducers/passSlice.tsx';
 
 import { finishGame } from './Reducers/endgameSlice.tsx';
 
 const dispatch = useDispatch();
 
-const [startState, setStartState] = useState(false);
-const [investigateState, setInvesState] = useState(false);
-const [shootState, setShootState] = useState(false);
-const [passState, setPassState] = useState(false);
-const [endState, setEndState] = useState(false);
+export const startState = useAppSelector((state) => state.start.gameStarted);
+export const investigateState = useAppSelector((state) => state.investigate.started);
+export const selectionState = useAppSelector((state) => state.select.inSelection);
+export const endGameState = useAppSelector((state) => state.endGame.gameOver);
+
+export const currentShootEnt = useAppSelector((state) => state.shoot.Entity);
+export const currentPassEnt = useAppSelector((state) => state.pass.Entity);
+export const currentInvestigateEnt = useAppSelector((state) => state.investigate.Entity);
+export const currentEndGameEnt = useAppSelector((state) => state.endGame.Entity);
+
 
 
 interface character // testing only - can put definition somewhere else
@@ -37,47 +43,58 @@ interface character // testing only - can put definition somewhere else
     type: string
 };
 
-const StartGame = () => 
+export const StartGame = (change:boolean) => 
 {
-    dispatch(startGame(startState));
+    dispatch(startGame(change));
     // call other functions to start other things as well
 }
 
-const InvestigateTarget = (chara:character) =>
+export const StartSelection = (change:boolean) =>
+{
+    dispatch(Selection(change));
+}
+
+export const StartInvestigate = (change:boolean) =>
+{
+    dispatch(startInvestigate(change));
+}
+
+export const EndGame = (change:boolean) =>
+{
+    dispatch(finishGame(change));
+}
+
+export const InvestigateTarget = (chara:character) =>
 {
     dispatch(setInvesTarget(chara));
 }
 
-const ShootCharacter = (chara:character) =>
+export const ShootCharacter = (chara:character) =>
 {
     // If we pressed shoot (needs to go through conditions)
     dispatch(Shoot(chara));
 }
 
-const PassCharacter = (chara:character) => 
+export const setDamage = (num:number) =>
+{
+    // If we pressed shoot (needs to go through conditions)
+    dispatch(SetDamage(num));
+}
+
+export const setShootingTarget = (chara:character) =>
+{
+    // If we pressed shoot (needs to go through conditions)
+    dispatch(SetShootingTarget(chara));
+}
+
+export const PassCharacter = (chara:character) => 
 {
     dispatch(passEnemy(chara));   
 }
 
-function Verdict()
+export const SetPassCharacter = (chara:character) => 
 {
-    // Once button is clicked function should:
-    //  - Display 'Shoot' and 'Pass' buttons
-    
-}
-
-function ShowHideRegistry()
-{
-    // Once button is clicked function should:
-    //  - display the town registry output list
-    //  - Be able to toggle view of list
-}
-
-function ShowHidePermit()
-{
-    // function should:
-    //  - display current enemy profile
-    //  - toggle view of profile
+    dispatch(SetPassTarget(chara));   
 }
 
 

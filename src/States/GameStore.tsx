@@ -4,6 +4,7 @@ import startReducer from './Reducers/startSlice';
 import investigateReducer from './Reducers/investigateSlice';
 import shootReducer from './Reducers/shootSlice';
 import passReducer from './Reducers/passSlice';
+import selectionReducer from './Reducers/selectionSlice.tsx';
 
 
 const store = configureStore({
@@ -12,6 +13,7 @@ const store = configureStore({
     investigate: investigateReducer,
     shoot: shootReducer,
     pass: passReducer,
+    select: selectionReducer,
     endGame: gameOverStateReducer
   },
 });
@@ -19,3 +21,6 @@ const store = configureStore({
 
 
 export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

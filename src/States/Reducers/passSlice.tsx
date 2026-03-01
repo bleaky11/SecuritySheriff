@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    started: Boolean,
     Entity: {name: "", health: 0, type: "Enemy"}
 };
 
