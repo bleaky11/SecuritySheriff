@@ -20,6 +20,7 @@ import { startInvestigate, setInvesTarget } from './Reducers/investigateSlice.ts
 import { Shoot, SetDamage, SetShootingTarget } from './Reducers/shootSlice.tsx';
 import { Selection } from './Reducers/selectionSlice.tsx';
 import { passEnemy, SetPassTarget } from './Reducers/passSlice.tsx';
+import { SelectDifficulty, SelectBounty, SelectLanguage} from './Reducers/bountyDifficulty.tsx';
 
 import { finishGame } from './Reducers/endgameSlice.tsx';
 
@@ -30,6 +31,7 @@ export function useGameStateMachine() {
     const startState = useAppSelector((state) => state.start.gameStarted);
     const investigateState = useAppSelector((state) => state.investigate.started);
     const selectionState = useAppSelector((state) => state.select.inSelection);
+    const settingsState = useAppSelector((state) => state.settings.settings);
     const endGameState = useAppSelector((state) => state.endGame.gameOver);
 
     // 🔹 Action wrappers
@@ -73,11 +75,24 @@ export function useGameStateMachine() {
         dispatch(SetPassTarget(entity));
     };
 
+    const  selectDifficulty = (change: boolean) => {
+        dispatch(SelectDifficulty(change));
+    };
+
+    const  selectBounty = (change: boolean) => {
+        dispatch(SelectBounty(change));
+    };
+
+    const  selectLanguage = (change: boolean) => {
+        dispatch(SelectLanguage(change));
+    };
+
     return {
         startState,
         investigateState,
         selectionState,
         endGameState,
+        settingsState,
         StartGame,
         StartSelection,
         StartInvestigate,
@@ -87,7 +102,10 @@ export function useGameStateMachine() {
         setDamage,
         setShootTarget,
         PassEnemy,
-        setPassTarget
+        setPassTarget,
+        selectDifficulty,
+        selectBounty,
+        selectLanguage
     };
 }
 

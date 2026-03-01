@@ -5,6 +5,7 @@ import investigateReducer from './Reducers/investigateSlice';
 import shootReducer from './Reducers/shootSlice';
 import passReducer from './Reducers/passSlice';
 import selectionReducer from './Reducers/selectionSlice.tsx';
+import settingsReducer from './Reducers/bountyDifficulty.tsx'
 
 
 const store = configureStore({
@@ -14,6 +15,7 @@ const store = configureStore({
     shoot: shootReducer,
     pass: passReducer,
     select: selectionReducer,
+    settings: settingsReducer,
     endGame: gameOverStateReducer
   },
 });
