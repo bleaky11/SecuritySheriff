@@ -1,0 +1,8 @@
+.code-line-interactive {
+  transition: background-color 0.2s; /* Smooth fade */
+  cursor: pointer;
+}
+
+.code-line-interactive:hover {
+  background-color: rgba(206, 206, 206, 0.5) !important; /* Subtle highlight */
+}
