@@ -12,6 +12,7 @@ function App() {
 
   return (
     <div className='home'>
+      Testing
       <img src={wildWest} className='background'></img>
       <h1 className="header">
         Security Sheriff

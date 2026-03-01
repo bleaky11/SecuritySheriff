@@ -8,6 +8,9 @@ import "./App.css"
 import "./SecuritySheriff.css"
 import { useEffect, useState } from "react"
 import Verdict from "./verdict"
+import type { Email, CharacterProfile } from "./data/models"
+import { EmailViewer } from "./components/email-components/email-view/email-view"
+import { generate_townsfolk } from "./service/gemini"
 
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
@@ -23,8 +26,13 @@ export default function SecuritySheriff() {
     const [list, setList] = useState<string>("");
     const [listOpen, setOpen] = useState<boolean>(false);
     const [tabOne, setTab] = useState<boolean>(true);
+    const [emailInfo, setEmail] = useState<Email>();
+    const [townFolks, setTownFolks] = useState<CharacterProfile[]>([]);
 
-
+    useEffect(()=>{
+        api
+    })
+    generate_townsfolk(10);
     function verdictButton(){
         if(choice === "idle")
             setChoice("deciding");
@@ -53,7 +61,7 @@ export default function SecuritySheriff() {
                 <button className={tabOne? "listTabs selected" : "listTabs"} onClick={()=>{setTab(true)}}>Outlaw Info</button>
                 <button className={tabOne? "listTabs" : "listTabs selected"} onClick={()=>{setTab(false)}}>Town Info</button>
                 {tabOne && <div className="Information">
-                    This guy is evil
+                    <EmailViewer></EmailViewer>
                 </div>}
                 {!tabOne && <div className="Information">
                     This town is evil
