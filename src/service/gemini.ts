@@ -63,8 +63,8 @@ const JSON_EMAIL_RESPONSE = `
     return the email output in JSON format with the following structure:
 
     EmailSegment {
-        Content: the content for this particular section of the email,
-        Indicator : boolean of whether this section indicates if this email is malicious or not
+        content: the content for this particular section of the email,
+        indicator : boolean of whether this section indicates if this email is malicious or not
     }
 
     Email {
@@ -84,7 +84,7 @@ const JSON_TOWNSFOLK_RESPONSE = `
         lastName : last name of towns folk (wild west theme)
         email : email of towns folk which is some combination of the first and last name with some random digits
         gender : gender of towns folk that matches name
-        occupation : occupation of towns folk that matches wild west theme
+        occupation : occupation of towns folk that matches wild west theme (do not choose sheriff or outlaw as occupations)
         characterTraits : a list of 3-5 unique character traits as strings
     }
 

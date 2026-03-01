@@ -29,6 +29,10 @@ export function ScriptInterface({script} : ScriptInterfaceProps) {
                     }
                 </div>
             } 
+
+
+
+            
         </div>
     );
-}
+} 

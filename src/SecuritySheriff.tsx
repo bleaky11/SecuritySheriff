@@ -8,6 +8,9 @@ import "./App.css"
 import "./SecuritySheriff.css"
 import { useEffect, useState } from "react"
 import Verdict from "./verdict"
+import type { Email, CharacterProfile } from "./data/models"
+import { EmailViewer } from "./components/email-components/email-view/email-view"
+import { generate_email, generate_townsfolk, initalize_gemini_api } from "./service/gemini"
 import { ScriptInterface } from "./components/script-components/script-interface/script-interface"
 import type { Script } from "./data/models"
 
@@ -25,7 +28,32 @@ export default function SecuritySheriff() {
     const [list, setList] = useState<string>("");
     const [listOpen, setOpen] = useState<boolean>(false);
     const [tabOne, setTab] = useState<boolean>(true);
+    const [emailInfo, setEmail] = useState<Email>();
+    const [townFolks, setTownFolks] = useState<CharacterProfile[]>([]);
 
+    useEffect(()=> {
+        initalize_gemini_api().then((response) => {
+            if (response) {
+                generate_townsfolk(10).then((res) => {
+                    if(response){
+                        const parsed = JSON.parse(res.response.text())["Townsfolk"]["people"];
+                        setTownFolks(parsed);
+                        console.log(parsed);      
+                        
+                        generate_email(3, "medium", parsed).then((res) => {
+                            if(res){
+                                const parsedEmail = JSON.parse(res.response.text());
+                                setEmail(parsedEmail);
+                                console.log(parsedEmail);
+                            }
+                        })
+                    }
+                }
+                )
+            }
+        }
+    )}, 
+    []);
     const fakeScript: Script ={
         containsError: true,
         scriptContent: "main()\n{\n\tprint(\Hello World\");\n}\n",
@@ -64,10 +92,14 @@ export default function SecuritySheriff() {
                 <button className={tabOne? "listTabs selected" : "listTabs"} onClick={()=>{setTab(true)}}>Outlaw Info</button>
                 <button className={tabOne? "listTabs" : "listTabs selected"} onClick={()=>{setTab(false)}}>Town Info</button>
                 {tabOne && <div className="Information">
-                    <ScriptInterface script={fakeScript}></ScriptInterface>
+                    {emailInfo !== undefined && <EmailViewer email={emailInfo}></EmailViewer> }
                 </div>}
                 {!tabOne && <div className="Information">
-                    This town is evil
+                    {townFolks.map((folk, index) => (
+                        <div key={index}>
+                            <span> {folk.firstName} {folk.lastName} {folk.occupation} {folk.characterTraits.join(", ")}</span>
+                        </div>
+                    ))}
                 </div>}
             </div>
         )
