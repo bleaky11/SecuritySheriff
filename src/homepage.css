@@ -1,0 +1,94 @@
+.header{
+    margin-top: 0;
+    position: sticky;
+    height: 10%;
+    width: 100vw;
+    top: 10%;
+    color: black;
+}
+
+.background {
+    position: absolute;
+    left: 0%;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.homeScreen{
+    position:sticky;
+    top: 50%;
+}
+
+.home{
+    height: 100vh;
+    width: 100vw;
+    justify-content: centered;
+}
+
+.overlay{
+    position: absolute;
+    left: 20%;
+    bottom: -500%;
+    height: 50vh;
+    width: 60vw;
+    border: 3px rgb(0, 0, 0) solid;
+    border-radius: 3rem;
+    background-color: #f0ce90;
+}
+
+.x{
+    position: absolute;
+    top: 0%;
+    right: 4%;
+    font-size: 4vh;
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.choosing{
+    display: flex;
+    position: sticky;
+    width: 90%;
+    padding-left: 5%;
+}
+
+.choices{
+    height: 10%;
+    border: 3px solid;
+    width: 100%;
+    cursor: pointer;
+}
+
+.unselected{
+    color: red;
+    border-color: red;
+}
+
+.selected{
+    color: blue;
+    background-color: white;
+    border-color: blue;
+}
+
+.buttonlayout{
+    width: 60vw;
+    position: absolute;
+    bottom: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.button{
+    justify-content: center;
+    display:flex;
+    width: 40%;
+    height: 5%;
+    border: 3px rgb(255, 10, 10) solid;
+    background-color: rgba(255, 10, 10, 0.76);
+    color: rgb(255, 201, 121);
+}
+
+.button:hover{
+    color: purple;
+}
