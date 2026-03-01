@@ -4,14 +4,11 @@ import wildWest from "./assets/wild-west-town-vector-background-photo-realistic-
 import { useState } from 'react';
 import SettingsOverlay from './SettingsOverlay';
 
-type difficulty = "easy" | "medium" | "hard";
-
 function App() {
   const [overLay, setOverlay] = useState<boolean>(false);
   function triggerOver(){
     setOverlay(!overLay);
   }
-  const [difficultyType, setDifficulty] = useState<difficulty>("easy");
 
   return (
     <div className='home'>
@@ -20,7 +17,7 @@ function App() {
         Security Sheriff
       </h1>
       <div className='homeScreen'>
-        {overLay && <SettingsOverlay difficultyType={difficultyType} setDifficulty={setDifficulty} setOverlay={triggerOver}></SettingsOverlay>}
+        {overLay && <SettingsOverlay setOverlay={triggerOver}></SettingsOverlay>}
         <button onClick={triggerOver}>Start Game</button>
       </div>
     </div>

@@ -7,15 +7,14 @@ type gameMode = "Script" | "Email";
 type language = "SQL" | "Python" | "Java" | "C" | "C++" | "Typescript";
 
 interface input {
-    difficultyType: difficulty;
-    setDifficulty: (diff: difficulty)=>void;
     setOverlay: ()=>void;
 }
 
-export default function SettingsOverlay({difficultyType, setDifficulty, setOverlay}: input) {
+export default function SettingsOverlay({setOverlay}: input) {
 
     const [gameMode, setGameMode] = useState<gameMode | null>();
     const [chosenLanguage, setLanguage] = useState<language | null>();
+    const [difficultyType, setDifficulty] = useState<difficulty>("Easy");
     
     return (
         <div className="overlay">
@@ -57,11 +56,12 @@ export default function SettingsOverlay({difficultyType, setDifficulty, setOverl
             {gameMode === "Script" && <div>
                 <h2>Select a Language type</h2>
                 <div className="choosing">
-                    <div className={difficultyType==="Easy"? 'selected choices' : 'unselected choices'} onClick={()=>setDifficulty("Easy")}>Easy</div>
-                    <div className={difficultyType==="Medium"? 'selected choices' : 'unselected choices'} onClick={()=>setDifficulty("Medium")}>Medium</div>
-                    <div className={difficultyType==="Hard"? 'selected choices' : 'unselected choices'} onClick={()=>setDifficulty("Hard")}>Hard</div>
-                    <div className={difficultyType==="Very Hard"? 'selected choices' : 'unselected choices'} onClick={()=>setDifficulty("Very Hard")}>Very Hard</div>
-                    <div className={difficultyType==="Extreme"? 'selected choices' : 'unselected choices'} onClick={()=>setDifficulty("Extreme")}>Extreme</div>
+                    <div className={chosenLanguage==="SQL"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("SQL")}>SQL</div>
+                    <div className={chosenLanguage==="C"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("C")}>C</div>
+                    <div className={chosenLanguage==="C++"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("C++")}>C++</div>
+                    <div className={chosenLanguage==="Python"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("Python")}>Python</div>
+                    <div className={chosenLanguage==="Java"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("Java")}>Java</div>
+                    <div className={chosenLanguage==="Typescript"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("Typescript")}>Typescript</div>
                 </div>
             </div>}
            
