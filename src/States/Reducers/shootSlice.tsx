@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     damage: 0,
-    Entity: {name: "", health: 0, type: "Enemy"}
+    Entity: {name: "", health: 0, type: "Alien"}
 };
 
-
+// ASSUME WE SET THE SHERRIF AS THE DEFAULT TARGET (will be set during game)
 const shootState = createSlice({
     name: "Shoot",
     initialState,
@@ -14,10 +14,19 @@ const shootState = createSlice({
             const otherEntity = 
             {
                 name: action.payload.name,
-                health: (action.payload.health - state.damage),
+                health: action.payload.health,
                 type: action.payload.type
             };
-            state.Entity = otherEntity;
+            if (otherEntity.type === "Cowboy")
+            {
+                state.Entity.health -= state.damage;
+            }
+            else
+            {
+                state.Entity = otherEntity;
+                state.Entity.health -= state.damage;
+            }
+            
         },
         SetDamage: (state, action) => {
             state.damage = action.payload;

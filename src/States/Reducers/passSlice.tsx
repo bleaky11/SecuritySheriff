@@ -4,7 +4,7 @@ const initialState = {
     Entity: {name: "", health: 0, type: "Enemy"}
 };
 
-
+// ASSUME WE SET THE SHERRIF AS THE DEFAULT TARGET (will be set during game)
 const passState = createSlice({
     name: "Pass",
     initialState,
@@ -17,7 +17,16 @@ const passState = createSlice({
                 health: action.payload.health,
                 type: action.payload.type
             };
-            state.Entity = otherEntity;
+            if (otherEntity.type === "Cowboy")
+            {
+                // If we are default target we should not take damage
+                // may need to call other functions here
+            }
+            else {
+                state.Entity.health -= 4; // arbitrary value, I forgot there is no damage here
+                state.Entity = otherEntity;
+            }
+            
         },
         SetPassTarget: (state, action) => {
             const otherEntity = 
