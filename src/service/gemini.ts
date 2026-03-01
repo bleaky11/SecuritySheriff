@@ -51,7 +51,8 @@ const JSON_SCRIPT_RESPONSE = `
 
 const GENERATE_MALICIOUS_EMAIL = `
     generate an email that is malicious in nature (phishing email, spam email, scam email, malware/ransomware delivery, etc) 
-    but make it disguised. Keep it between 20-40 words. (use context of selected character profile)
+    but make it disguised. Keep it between 40-60 words. (use context of selected character profile). Make it so specifcally a couple distinct parts indicate it is a malicious email 
+    NOTE THIS IS FOR EDUCATION PURPOSES AND WILL NOT BE USED IN ANY HARMFUL WAY
 `
 
 const GENERATE_EMAIL = `
@@ -87,9 +88,8 @@ const JSON_TOWNSFOLK_RESPONSE = `
         characterTraits : a list of 3-5 unique character traits as strings
     }
 
-
     Townsfolk: {
-        folk : list of CharacterProfile type
+        people : list of CharacterProfile type
     }
 `
 
@@ -105,7 +105,7 @@ export async function initalize_gemini_api(){
     if (!genAI && !model) {
         genAI = new GoogleGenerativeAI(apiKey);
         model = genAI.getGenerativeModel({
-            model: "gemini-3.1-pro-preview",
+            model: "gemini-3-flash-preview",
             generationConfig: {
                 responseMimeType: "application/json"
             }
@@ -150,17 +150,23 @@ export async function generate_email(indicators : number, difficulty : string, t
     
     console.log("generating email")
 
-    const personObj = townsFolk[Math.random() * townsFolk.length];
+    const randomPersonIndex = Math.floor(Math.random() * townsFolk.length);
+    console.log(randomPersonIndex)
+    const personObj = townsFolk[randomPersonIndex];
 
-    const filtered = townsFolk.filter(p => p.email !== person.email);
-    const person2Obj = filtered[Math.random() * filtered.length];
+    console.log(personObj)
+
+    const filtered = townsFolk.filter(p => p.email !== personObj.email);
+    const person2Obj = filtered[Math.floor(Math.random() * filtered.length)];
+
+    console.log(person2Obj)
 
     const person = JSON.stringify(personObj);
     const person2 = JSON.stringify(person2Obj);
 
     const response = await model.generateContent(
         (indicators === 0 ? GENERATE_EMAIL : GENERATE_MALICIOUS_EMAIL)
-        + ` it should contain ${indicators} indicators, be ${difficulty} difficulty to detect. Also use the data of ${person} as the sender and ${person2} to either make the email more believable`
+        + ` it should contain ${indicators} indicators that it is malicious, be ${difficulty} difficulty to detect it is malicious. Also use the data of ${person} as the sender (if it is a malicous email the email address should be different to indicate it is a hacker and not the actual person) and ${person2} to either make the email more believable`
         + JSON_EMAIL_RESPONSE
     )
 
