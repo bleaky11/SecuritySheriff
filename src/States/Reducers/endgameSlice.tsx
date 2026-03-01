@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     gameState: "",
-    gameOver: Boolean,
+    gameOver: false,
     Entity: {name: "", health: 0, type: "Enemy"}
 };
 

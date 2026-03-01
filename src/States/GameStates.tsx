@@ -36,7 +36,7 @@ export function useGameStateMachine() {
 
     // 🔹 Action wrappers
     const StartGame = (change: boolean) => {
-        dispatch(startGame(change));
+        dispatch(startGame(change.valueOf()));
     };
 
     const StartSelection = (change: boolean) => {

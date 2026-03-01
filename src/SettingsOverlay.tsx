@@ -19,21 +19,40 @@ export default function SettingsOverlay({setOverlay}: input) {
 
     function DifficultyButtons()
     {
-        const {settingsState, selectDifficulty, selectBounty, selectLanguage} = useGameStateMachine();
+        const game = useGameStateMachine();
+        
+        {console.log(game.settingsState)}
 
         return (
              <div> 
                 <h2>Select your difficulty</h2>
                 <div className="choosing">
-                    <div className={settingsState.difficulty==="Easy"? 'selected choices' : 'unselected choices'} onClick={()=>selectDifficulty("Easy")}>Easy</div>
-                    <div className={settingsState.difficulty==="Medium"? 'selected choices' : 'unselected choices'} onClick={()=>selectDifficulty("Medium")}>Medium</div>
-                    <div className={settingsState.difficulty==="Hard"? 'selected choices' : 'unselected choices'} onClick={()=>selectDifficulty("Hard")}>Hard</div>
-                    <div className={settingsState.difficulty==="Very Hard"? 'selected choices' : 'unselected choices'} onClick={()=>selectDifficulty("Very Hard")}>Very Hard</div>
-                    <div className={settingsState.difficulty==="Extreme"? 'selected choices' : 'unselected choices'} onClick={()=>selectDifficulty("Extreme")}>Extreme</div>
+                    <div className={"Easy"} onClick={()=>game.selectDifficulty("Easy")}>Easy</div>
+                    <div className={"Medium"} onClick={()=>game.selectDifficulty("Medium")}>Medium</div>
+                    <div className={"Hard"} onClick={()=>game.selectDifficulty("Hard")}>Hard</div>
+                    <div className={"Very Hard" } onClick={()=>game.selectDifficulty("Very Hard")}>Very Hard</div>
+                    <div className={"Extreme" } onClick={()=>game.selectDifficulty("Extreme")}>Extreme</div>
                 </div>
             </div>
 
             
+        )
+
+    } 
+
+    function LanguageButtons()
+    {
+        const game = useGameStateMachine();
+
+        return (
+             <div> 
+                <div className={"SQL"} onClick={()=>game.selectLanguage("SQL")}>SQL</div>
+                    <div className={"C"} onClick={()=>game.selectLanguage("C")}>C</div>
+                    <div className={"C++"} onClick={()=>game.selectLanguage("C++")}>C++</div>
+                    <div className={"Python"} onClick={()=>game.selectLanguage("Python")}>Python</div>
+                    <div className={"Java"} onClick={()=>game.selectLanguage("Java")}>Java</div>
+                    <div className={"Typescript"} onClick={()=>game.selectLanguage("Typescript")}>Typescript</div>
+            </div>
         )
 
     } 
@@ -64,17 +83,12 @@ export default function SettingsOverlay({setOverlay}: input) {
 
             </div>
 
-            {DifficultyButtons()}
+            {<DifficultyButtons/>} 
 
             {gameMode === "Script" && <div>
                 <h2>Select a Language type</h2>
                 <div className="choosing">
-                    <div className={chosenLanguage==="SQL"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("SQL")}>SQL</div>
-                    <div className={chosenLanguage==="C"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("C")}>C</div>
-                    <div className={chosenLanguage==="C++"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("C++")}>C++</div>
-                    <div className={chosenLanguage==="Python"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("Python")}>Python</div>
-                    <div className={chosenLanguage==="Java"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("Java")}>Java</div>
-                    <div className={chosenLanguage==="Typescript"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("Typescript")}>Typescript</div>
+                   {<LanguageButtons/>}
                 </div>
             </div>}
            

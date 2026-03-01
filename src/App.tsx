@@ -2,6 +2,7 @@ import './App.css'
 import "./homepage.css"
 import wildWest from "./assets/wild-west-town-vector-background-photo-realistic-56781539.png"
 import { useState } from 'react';
+import SettingsOverlay from './SettingsOverlay';
 
 function App() {
   const [overLay, setOverlay] = useState<boolean>(false);
@@ -17,7 +18,7 @@ function App() {
         Security Sheriff
       </h1>
       <div className='homeScreen'>
-        {overLay && /*<SettingsOverlay setOverlay={triggerOver}></SettingsOverlay>*/}
+        {overLay && <SettingsOverlay setOverlay={triggerOver}></SettingsOverlay>}
         <button onClick={triggerOver}>Start Game</button>
       </div>
     </div>
