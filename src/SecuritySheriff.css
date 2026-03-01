@@ -1,0 +1,127 @@
+
+
+.game{
+    display: absolute;
+    border: 1px black solid;
+    left: 30%;
+}
+
+.dialogue{
+    position: absolute;
+    width: 80vh;
+    height: 70%;
+    background-color: rgba(0, 55, 255, 0.38);
+    font-size: 2rem;
+    margin-left: 2%;
+}
+
+.interface{
+    position: absolute;
+    display: flex;
+    width: 100vh;
+    height: 40vh;
+    bottom:0%;
+    font-size: 2rem;
+    margin-left: 3%;
+}
+
+.character{
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    width: 60vh;
+    margin-left: 1%;
+}
+
+.absolute{
+    left: 0%;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    animation: fade-in 3s linear;
+}
+
+@keyframes fade-in{
+    0% {opacity: 0;}
+    25% {opacity: 0.1;}
+    50% {opacity: 0.4;}
+    75% {opacity: 0.9;}
+    100% {opacity: 1;}
+}
+
+
+.sheriff{
+    position: absolute;
+    max-width: auto;
+    max-height: 28vh;
+    right: -20%;
+}
+
+.verdict{
+    position: absolute;
+    bottom: 3%;
+    border: 2px red solid;
+    background-color: rgba(255, 25, 25, 0.47);
+    width: 10%;
+    height: 5%;
+    padding-top: 0%;
+    margin-top: 0%;
+    left: 4%;
+}
+
+.openList{
+    left: 42%;
+}
+
+.verdictOverlay{
+    position: absolute;
+    bottom: 0%;
+    border: 1px red solid;
+    width: 20%;
+    height: 10%;
+    margin-bottom: 0.5%;
+    left: 18%;
+    border: 2px red solid;
+    border-radius: 2rem;
+    background-color: rgb(236, 191, 100);
+    display: flex;
+    justify-content: space-around;
+}
+
+.verdictButtons{
+    background-color: rgb(255, 83, 83);
+    height: 40%;
+    width: 40%;
+    margin-top: 10%;
+}
+
+.sheriffList{
+    position: absolute;
+    right: 3%;
+    top: 6%;
+    border: 2px rgb(243, 167, 105) solid;
+    background-color: white;
+    width: 44vw;
+    height: 81.5vh;
+    justify-content: space-around;
+}
+
+.listTabs{
+    background-color: white;
+    border: 0.5vh rgb(243, 167, 105) solid;
+    border-radius: 0;
+    position: relative;
+    top: 0%;
+    width: 50%;
+    height: 10%;
+    color: rgb(243, 167, 105);
+}
+
+.selected{
+    border: 0.5vh rgb(252, 149, 65) inset;
+}
+
+.Information{
+    color: black;
+}
