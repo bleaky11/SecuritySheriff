@@ -10,8 +10,9 @@
         - Win (Show win screen -> play again, main menu (reset game))
         - Lose (Show lose screen -> try again, main menu (reset game))
 */
-import { useDispatch } from "react-redux";
+
 import { useAppSelector } from "./hooks.tsx";
+import { useDispatch } from "react-redux";
 
 import  { startGame }   from "./Reducers/startSlice.tsx";
 
@@ -22,79 +23,72 @@ import { passEnemy, SetPassTarget } from './Reducers/passSlice.tsx';
 
 import { finishGame } from './Reducers/endgameSlice.tsx';
 
-const dispatch = useDispatch();
+export function useGameStateMachine() {
+    const dispatch = useDispatch();
 
-export const startState = useAppSelector((state) => state.start.gameStarted);
-export const investigateState = useAppSelector((state) => state.investigate.started);
-export const selectionState = useAppSelector((state) => state.select.inSelection);
-export const endGameState = useAppSelector((state) => state.endGame.gameOver);
+    // 🔹 Select reactive state
+    const startState = useAppSelector((state) => state.start.gameStarted);
+    const investigateState = useAppSelector((state) => state.investigate.started);
+    const selectionState = useAppSelector((state) => state.select.inSelection);
+    const endGameState = useAppSelector((state) => state.endGame.gameOver);
 
-export const currentShootEnt = useAppSelector((state) => state.shoot.Entity);
-export const currentPassEnt = useAppSelector((state) => state.pass.Entity);
-export const currentInvestigateEnt = useAppSelector((state) => state.investigate.Entity);
-export const currentEndGameEnt = useAppSelector((state) => state.endGame.Entity);
+    // 🔹 Action wrappers
+    const StartGame = (change: boolean) => {
+        dispatch(startGame(change));
+    };
 
+    const StartSelection = (change: boolean) => {
+        dispatch(Selection(change));
+    };
 
+    const StartInvestigate = (change: boolean) => {
+        dispatch(startInvestigate(change));
+    };
 
-interface character // testing only - can put definition somewhere else
-{
-    name: string,
-    health: number,
-    type: string
-};
+    const EndGame = (change: boolean) => {
+        dispatch(finishGame(change));
+    };
 
-export const StartGame = (change:boolean) => 
-{
-    dispatch(startGame(change));
-    // call other functions to start other things as well
-}
+    const InvestigateTarget = (chara: any) => {
+        dispatch(setInvesTarget(chara));
+    };
 
-export const StartSelection = (change:boolean) =>
-{
-    dispatch(Selection(change));
-}
+    const ShootCharacter = (chara: any) => {
+        dispatch(Shoot(chara));
+    };
 
-export const StartInvestigate = (change:boolean) =>
-{
-    dispatch(startInvestigate(change));
-}
+    const setDamage = (num: any) => {
+        dispatch(SetDamage(num));
+    };
 
-export const EndGame = (change:boolean) =>
-{
-    dispatch(finishGame(change));
-}
+    const setShootTarget = (entity: any) => {
+        dispatch(SetShootingTarget(entity));
+    };
 
-export const InvestigateTarget = (chara:character) =>
-{
-    dispatch(setInvesTarget(chara));
-}
+    const PassEnemy = (entity: any) => {
+        dispatch(passEnemy(entity));
+    };
 
-export const ShootCharacter = (chara:character) =>
-{
-    // If we pressed shoot (needs to go through conditions)
-    dispatch(Shoot(chara));
-}
+    const setPassTarget = (entity: any) => {
+        dispatch(SetPassTarget(entity));
+    };
 
-export const setDamage = (num:number) =>
-{
-    // If we pressed shoot (needs to go through conditions)
-    dispatch(SetDamage(num));
-}
-
-export const setShootingTarget = (chara:character) =>
-{
-    // If we pressed shoot (needs to go through conditions)
-    dispatch(SetShootingTarget(chara));
-}
-
-export const PassCharacter = (chara:character) => 
-{
-    dispatch(passEnemy(chara));   
-}
-
-export const SetPassCharacter = (chara:character) => 
-{
-    dispatch(SetPassTarget(chara));   
+    return {
+        startState,
+        investigateState,
+        selectionState,
+        endGameState,
+        StartGame,
+        StartSelection,
+        StartInvestigate,
+        EndGame,
+        InvestigateTarget,
+        ShootCharacter,
+        setDamage,
+        setShootTarget,
+        PassEnemy,
+        setPassTarget
+    };
 }
 
 

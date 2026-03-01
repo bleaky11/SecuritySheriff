@@ -14,6 +14,7 @@ const startState = createSlice({
         startGame: (state, action) => {
             // start dialogue, play animations, reload AI output
             state.gameStarted = action.payload;
+            console.log("Start game has been called!");
         }
     }
 });

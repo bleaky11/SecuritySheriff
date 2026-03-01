@@ -7,6 +7,7 @@ import redx from "./assets/redx.png"
 import "./App.css"
 import "./SecuritySheriff.css"
 import { useEffect, useState } from "react"
+
 import Verdict from "./verdict"
 
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-
 type difficulty = "easy" | "medium" | "hard";
 
 interface input {
@@ -21,7 +20,7 @@ export default function difficultyOverlay({difficulty, setDifficulty, setOverlay
                 <div className={difficulty==="hard"? 'selected choices' : 'unselected choices'} onClick={()=>setDifficulty("hard")}>Hard</div>
             </div>
             <div className="buttonlayout">
-                <Link to={"/game"} className="button">Start</Link>
+                <Link to={"/game"} className="button" >Start</Link>
             </div>
         </div>
     )

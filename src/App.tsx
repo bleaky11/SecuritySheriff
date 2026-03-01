@@ -10,6 +10,7 @@ function App() {
   const [overLay, setOverlay] = useState<boolean>(false);
   function triggerOver(){
     setOverlay(!overLay);
+    console.log("Hello, I am from the triggerOver function!");
   }
   const [difficulty, setDifficulty] = useState<difficulty>("easy");
 
