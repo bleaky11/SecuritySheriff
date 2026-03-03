@@ -16,7 +16,7 @@ type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
 
 export default function SecuritySheriff() {
-
+    
     const [dialogue, setDialogue] = useState<string>("Howdy pardner");
     const [outlawType, setOutlaw] = useState<outlawType>("Alien");
     const [showTrueForm, setForm] = useState<boolean>(false);
@@ -28,6 +28,8 @@ export default function SecuritySheriff() {
     const [tabOne, setTab] = useState<boolean>(true);
     const [emailInfo, setEmail] = useState<Email>();
     const [townFolks, setTownFolks] = useState<CharacterProfile[]>([]);
+
+
 
     useEffect(()=> {
         initalize_gemini_api().then((response) => {
