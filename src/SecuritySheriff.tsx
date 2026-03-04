@@ -12,6 +12,8 @@ import type { Email, CharacterProfile, Script } from "./data/models"
 import { generate_email, generate_script, generate_townsfolk, initalize_gemini_api } from "./service/gemini"
 import type { GameSettings } from "./SettingsOverlay"
 import { useLocation } from "react-router-dom"
+import { EmailViewer } from "./components/email-components/email-view/email-view"
+import { ScriptInterface } from "./components/script-components/script-interface/script-interface"
 
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
@@ -112,7 +114,7 @@ export default function SecuritySheriff() {
             currentRoundData = await generateNewEmail();
         }
 
-        setCurrentRound(currentRound);
+        setCurrentRound(currentRoundData);
 
         if (state && currentRoundData) {
             setGameData(prev => {
@@ -182,39 +184,42 @@ export default function SecuritySheriff() {
         )
     }
 
-    // function SheriffList(){
-    //     return(
-    //         <div className="sheriffList">
-    //             <button className={tabOne? "listTabs selected" : "listTabs"} onClick={()=>{setTab(true)}}>Outlaw Info</button>
-    //             <button className={tabOne? "listTabs" : "listTabs selected"} onClick={()=>{setTab(false)}}>Town Info</button>
-    //             {tabOne && <div className="Information">
-    //                 {emailInfo !== undefined && <EmailViewer email={emailInfo}></EmailViewer> }
-    //                 {currentScript !== null && 
-    //                     <div>
-    //                         <ScriptInterface script = {currentScript}></ScriptInterface>
-    //                     </div>
-    //                 }
-    //             </div>}
-    //             {!tabOne && <div className="Information">
-    //                 {townFolks.map((folk, index) => (
-    //                     <div key={index}>
-    //                         <span> {folk.firstName} {folk.lastName} {folk.occupation} </span>
-    //                         <p>Sex: {folk.gender}</p>
-    //                         <p>Occupation: {folk.occupation}</p>
-    //                         <div> 
-    //                             <p>Character Traits:</p>
-    //                             <ul>
-    //                                 {folk.characterTraits.map((trait, idx) => (
-    //                                     <li key={idx}>{trait}</li>
-    //                                 ))}
-    //                             </ul>
-    //                         </div>
-    //                     </div>
-    //                 ))}
-    //             </div>}
-    //         </div>
-    //     )
-    // }
+    function SheriffList(
+        {
+            roundData, 
+            gameData, 
+        } : 
+        {
+            roundData : GameRound | null, 
+            gameData : GameData | null, 
+        }
+    ){
+
+        const [tab, setTab] = useState(false);
+
+        return(
+            <div className="sheriffList">
+                <button className={tab? "listTabs selected" : "listTabs"} onClick={()=>{setTab(true)}}>Outlaw Info</button>
+                <button className={tab? "listTabs" : "listTabs selected"} onClick={()=>{setTab(false)}}>Town Info</button>
+                {tab && <div className="Information">
+                    {(roundData === null) && <div> Round Data Loading </div>}
+                    {(roundData !== null && roundData.type === "Email") && roundData.email !== undefined && <EmailViewer email={roundData.email}></EmailViewer> }
+                    {(roundData !== null && roundData.type === "Script" && roundData.script !== undefined) && 
+                        <div>
+                            <ScriptInterface script = {roundData.script}></ScriptInterface>
+                        </div>
+                    }
+                </div>}
+                {(!tab && gameData !== null) && <div className="Information">
+                    {gameData.townsfolk.map((folk, index) => (
+                        <div key={index}>
+                            <span> {folk.firstName} {folk.lastName} {folk.occupation} {folk.gender} </span>
+                        </div>
+                    ))}
+                </div>}
+            </div>
+        )
+    }
 
     useEffect(()=>{
         if(choice !== "idle" && choice !== "deciding"){
@@ -226,7 +231,7 @@ export default function SecuritySheriff() {
     }, [choice, outlawType]);
 
     console.log(gameData);
-
+    console.log(currentRound)
     return (
         <div className="home">
             <img src={saloon} alt="Saloon" className="background"/>
@@ -239,7 +244,7 @@ export default function SecuritySheriff() {
                 </div>
                 {!listOpen && <img src={sheriff} alt="sheriff" className="sheriff"></img>}
             </div>
-            {/* {listOpen && <SheriffList/>} */}
+            {listOpen  && <SheriffList roundData={currentRound} gameData={gameData}/>}
             <button className="verdict openList" onClick={openList}>Open List</button>
             <button className="verdict" onClick={verdictButton}>verdict</button>
             {choice !== `${"idle"}` && <Verdict setDecision={setChoice}/>}
