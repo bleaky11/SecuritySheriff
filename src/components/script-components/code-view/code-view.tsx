@@ -1,14 +1,17 @@
 import { Highlight, themes } from "prism-react-renderer";
 import { useState, type JSX } from "react";
-import type { Script } from "../../../data/models";
+import type { Script, ScriptError } from "../../../data/models";
 
 import './code-view.css'
 
+export interface CodeViewerProps {
+    script : Script,
+    setLineInfo : (message : String) => void,
+    setErrorInfo : (scriptError : ScriptError) => void
+}
 
-export function CodeViewer({script} : {script : Script}) : JSX.Element{
-
+export function CodeViewer({script, setLineInfo, setErrorInfo} : CodeViewerProps) {
     const [currentScript, setCurrentScript] = useState<Script>(script);
-
     const [selectedLine, setSelectedLine] = useState<null | number>(null);
 
     const checkCodeLine = (line : number) => {
@@ -18,15 +21,10 @@ export function CodeViewer({script} : {script : Script}) : JSX.Element{
         })
 
         if (isError.length === 0) {
-            console.log("No errors here");
-            return(
-                <div style={{color:"purple"}}>{`Line${line} is not an error`}</div>
-            )
+            setLineInfo(`Line ${line} is not an error`);
         } else {
-            console.log("Error found");
-            return (
-                <div>{isError[0].description}</div>
-            )
+            setLineInfo(`Error found on line ${line}`);
+            setErrorInfo(isError[0]);
         }
     }
 
