@@ -1,4 +1,24 @@
+
+
 export type ErrorType = "syntax" | "logic" | "security";
+
+export type Gender = "Male" | "Female";
+
+export type Difficulty = "easy" | "medium" | "hard" | "very hard" | "extreme";
+
+export type Language = "SQL" | "C++" | "C" | "Python" | "Java" | "Typescript";
+
+export enum GameType {
+    "SCRIPT",
+    "EMAIL",
+    "MIXED"
+}
+
+export interface GameSettings {
+    gameType : GameType,
+    difficulty : Difficulty,
+    language? : Language
+}
 
 export interface ScriptError {
     line : number,
@@ -28,8 +48,6 @@ export interface Email {
     sender : string, 
     reciever : string
 }
-
-export type Gender = "Male" | "Female"
 
 export interface CharacterProfile {
     firstName : string,

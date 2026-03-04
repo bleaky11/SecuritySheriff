@@ -1,10 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
-type difficulty = "Easy" | "Medium" | "Hard" | "Very Hard" | "Extreme";
-type gameMode = "Script" | "Email";
-type language = "SQL" | "Python" | "Java" | "C" | "C++" | "Typescript";
+type Difficulty = "Easy" | "Medium" | "Hard" | "Very Hard" | "Extreme";
+type GameMode = "Script" | "Email";
+type Language = "SQL" | "Python" | "Java" | "C" | "C++" | "Typescript";
+
+
+export interface GameSettings {
+    gameMode : GameMode,
+    difficulty : Difficulty,
+    language? : Language
+}
 
 interface input {
     setOverlay: ()=>void;
@@ -12,10 +19,25 @@ interface input {
 
 export default function SettingsOverlay({setOverlay}: input) {
 
-    const [gameMode, setGameMode] = useState<gameMode | null>();
-    const [chosenLanguage, setLanguage] = useState<language | null>();
-    const [difficultyType, setDifficulty] = useState<difficulty>("Easy");
+    const [chosenGameMode, setGameMode] = useState<GameMode | undefined>(undefined);
+    const [chosenLanguage, setLanguage] = useState<Language | undefined>(undefined);
+    const [difficultyType, setDifficulty] = useState<Difficulty | undefined>(undefined);
     
+    const nav = useNavigate();
+
+    const loadGameSettings = () => {
+        if (chosenGameMode !== undefined && difficultyType !== undefined) {
+            const gameSettings : GameSettings = {
+                gameMode : chosenGameMode,
+                difficulty : difficultyType,
+                language : chosenLanguage
+            }
+
+            // pass game settings when navigating to game page
+            nav("/game", {state : gameSettings})
+        }   
+    }
+
     return (
         <div className="overlay">
             <div className="x" onClick={setOverlay}>x</div>
@@ -24,14 +46,14 @@ export default function SettingsOverlay({setOverlay}: input) {
                 <h2>Select Bounty</h2>
 
                 <div className = "choosing"> 
-                    <div className = {gameMode==="Script"? "chosen" :"poster"}  onClick={()=>{setGameMode("Script")}}
+                    <div className = {chosenGameMode==="Script"? "chosen" :"poster"}  onClick={()=>{setGameMode("Script")}}
                     >  
                         <h3> Buggy Script  </h3>
                         <h4> There has been talk of beings going around trying to brainwash the townsfolk with alien scripts. Find them and bring them to justice </h4>
                         <b><span> (Test your debugging skills by seeing if a script has any bugs) </span></b>
                     </div>
 
-                    <div className = {gameMode==="Email"? "chosen" :"poster"} onClick={()=>{setGameMode("Email")}}
+                    <div className = {chosenGameMode==="Email"? "chosen" :"poster"} onClick={()=>{setGameMode("Email")}}
                         >  
                         <h3> Fishy Email Bandits  </h3>
                         <h4> There have been a lot of fishy bandits trying to trick the townsfolk with their emails. Find them and bring them to justice</h4 >
@@ -53,7 +75,7 @@ export default function SettingsOverlay({setOverlay}: input) {
                 </div>
             </div>
 
-            {gameMode === "Script" && <div>
+            {chosenGameMode === "Script" && <div>
                 <h2>Select a Language type</h2>
                 <div className="choosing">
                     <div className={chosenLanguage==="SQL"? 'selected choices' : 'unselected choices'} onClick={()=>setLanguage("SQL")}>SQL</div>
@@ -66,7 +88,7 @@ export default function SettingsOverlay({setOverlay}: input) {
             </div>}
            
             <div className="buttonlayout">
-                <Link to={"/game"} className="button">Start</Link>
+                <button className="button" onClick={() => loadGameSettings()}> Start </button> 
             </div>
         </div>
     )
