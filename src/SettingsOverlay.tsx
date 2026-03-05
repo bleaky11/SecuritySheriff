@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
 type Difficulty = "Easy" | "Medium" | "Hard" | "Very Hard" | "Extreme";
 type GameMode = "Script" | "Email";
 type Language = "SQL" | "Python" | "Java" | "C" | "C++" | "Typescript";
-
 
 export interface GameSettings {
     gameMode : GameMode,

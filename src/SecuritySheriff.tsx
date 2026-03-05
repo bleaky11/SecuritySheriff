@@ -47,9 +47,7 @@ export default function SecuritySheriff() {
     const [tabOne, setTab] = useState<boolean>(true);
 
 
-    const [emailInfo, setEmail] = useState<Email>();
     const [townFolks, setTownFolks] = useState<CharacterProfile[]>([]);
-    const [currentScript, setCurrentScript] = useState<null | Script>(null);
 
     const [currentRound, setCurrentRound] = useState<GameRound | null>(null);
     const [gameData, setGameData] = useState<GameData | null>(null);
@@ -104,63 +102,119 @@ export default function SecuritySheriff() {
         return null;
     }, [gameData, state]);
 
+
+
+    // const generateRound = useCallback(async () => {
+
+    //     let currentRoundData : GameRound | null = null;
+
+    //     if (state.gameMode === "Script") {
+    //         currentRoundData = await generateNewScript();
+    //     } else {
+    //         currentRoundData = await generateNewEmail();
+    //     }
+
+    //     setCurrentRound(currentRoundData);
+
+    //     return currentRoundData;
+    // }, [currentRound, generateNewEmail, generateNewScript, state]);
+
     const generateRound = useCallback(async () => {
+    if (state.gameMode === "Script") {
+        return await generateNewScript();
+    } else {
+        return await generateNewEmail();
+    }
+    }, [generateNewEmail, generateNewScript, state.gameMode]);
 
-        let currentRoundData : GameRound | null = null;
+    // useEffect(()=> {
+    //     console.log("Loading API")
+    //     initalize_gemini_api().then((response) => {
+    //         console.log("API loaded")
+    //         if (response) {
+    //             console.log("Generating townsfolk")
+    //             generate_townsfolk(10).then((res) => {
+    //                 if(response){
+    //                     console.log("Townsfolk generated")
+    //                     const parsed = JSON.parse(res.response.text())["Townsfolk"]["people"];
+    //                     setTownFolks(parsed);
+    //                     console.log(parsed);      
+                        
+    //                     generateRound().then((currentRoundData) => {
+    //                         console.log("Round generated")
+    //                         console.log(currentRoundData)
+    //                         const gameData : GameData = {
+    //                             settings : state,
+    //                             townsfolk : parsed,
+    //                             rounds : [currentRoundData!]
+    //                         }
 
-        if (state.gameMode === "Script") {
-            currentRoundData = await generateNewScript();
-        } else {
-            currentRoundData = await generateNewEmail();
-        }
+    //                         setGameData(gameData);
+    //                     })
+    //                 }
+    //             })
+    //         }
+    //     }
+    // )}, 
+    // [generateRound, state]);
 
-        setCurrentRound(currentRoundData);
+    useEffect(() => {
+        async function init() {
+            // console.log("Loading API");
 
-        if (state && currentRoundData) {
-            setGameData(prev => {
-                return prev === null ? 
-                {
-                    settings : state,
-                    townsfolk : [],
-                    rounds : [currentRoundData]
-                } :
-                {
-                    ...prev,
-                    rounds : [...prev.rounds, currentRoundData]
+            // const response = initalize_gemini_api();
+            // console.log(response);
+            // if (!response) {
+            //     console.error("Failed to initialize Gemini API");
+            //     return;
+            // }
+            // const res = await generate_townsfolk(10);
+            // const parsed = JSON.parse(res.response.text())["Townsfolk"]["people"];
+            // setTownFolks(parsed);
+
+            // const firstRound = await generateRound();
+
+            // setGameData({
+            // settings: state,
+            // townsfolk: parsed,
+            // rounds: [firstRound!]
+            // });
+
+            // console.log("API loaded");
+
+            console.log("Loading API")
+            initalize_gemini_api().then((response) => {
+                console.log("API loaded")
+                if (response) {
+                    console.log("Generating townsfolk")
+                    generate_townsfolk(10).then((res) => {
+                        if(response){
+                            console.log("Townsfolk generated")
+                            const parsed = JSON.parse(res.response.text())["Townsfolk"]["people"];
+                            setTownFolks(parsed);
+                            console.log(parsed);      
+                            
+                            generateRound().then((currentRoundData) => {
+                                console.log("Round generated")
+                                console.log(currentRoundData)
+                                const gameData : GameData = {
+                                    settings : state,
+                                    townsfolk : parsed,
+                                    rounds : [currentRoundData!]
+                                }
+
+                                setGameData(gameData);
+                                setCurrentRound(currentRoundData);
+                            })
+                        }
+                    })
                 }
             })
-
         }
-    }, [currentRound, generateNewEmail, generateNewScript, state]);
 
-    useEffect(()=> {
-        console.log("Loading API")
-        initalize_gemini_api().then((response) => {
-            console.log("API loaded")
-            if (response) {
-                console.log("Generating townsfolk")
-                generate_townsfolk(10).then((res) => {
-                    if(response){
-                        console.log("Townsfolk generated")
-                        const parsed = JSON.parse(res.response.text())["Townsfolk"]["people"];
-                        setTownFolks(parsed);
-                        console.log(parsed);      
-                        
-                        const gameData : GameData = {
-                            settings : state,
-                            townsfolk : parsed,
-                            rounds : []
-                        }
+        init();
+    }, []); 
 
-                        setGameData(gameData);
-                        generateRound();
-                    }
-                }
-                )
-            }
-        }
-    )}, 
-    [generateRound, state]);
 
     function verdictButton(){
         if(choice === "idle")
