@@ -9,6 +9,7 @@ export interface GameSettings {
     gameMode : GameMode,
     difficulty : Difficulty,
     language? : Language
+    debug : boolean
 }
 
 interface input {
@@ -23,12 +24,13 @@ export default function SettingsOverlay({setOverlay}: input) {
     
     const nav = useNavigate();
 
-    const loadGameSettings = () => {
+    const loadGameSettings = (debug = true) => {
         if (chosenGameMode !== undefined && difficultyType !== undefined) {
             const gameSettings : GameSettings = {
                 gameMode : chosenGameMode,
                 difficulty : difficultyType,
-                language : chosenLanguage
+                language : chosenLanguage,
+                debug : debug
             }
 
             // pass game settings when navigating to game page
@@ -85,8 +87,14 @@ export default function SettingsOverlay({setOverlay}: input) {
                 </div>
             </div>}
            
-            <div className="buttonlayout">
-                <button className="button" onClick={() => loadGameSettings()}> Start </button> 
+            <div>
+                <div className="buttonlayout">
+                    <button className="button" onClick={() => loadGameSettings(false)}> Start </button> 
+                    <button className="button" onClick={() => loadGameSettings(true)}> Debug </button>
+                </div>
+
+                <p> *Debug mode does not use API Tokens* </p>
+
             </div>
         </div>
     )

@@ -15,6 +15,10 @@ import { useLocation } from "react-router-dom"
 import { EmailViewer } from "./components/email-components/email-view/email-view"
 import { ScriptInterface } from "./components/script-components/script-interface/script-interface"
 
+// pregenerated data used in debug mode
+import {TOWNS_FOLK_MOCK_DATA, SCRIPT_MOCK_DATA} from "./data/mock-data.ts"
+
+
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
 
@@ -46,8 +50,7 @@ export default function SecuritySheriff() {
     const [listOpen, setOpen] = useState<boolean>(false);
     const [tabOne, setTab] = useState<boolean>(true);
 
-
-    const [townFolks, setTownFolks] = useState<CharacterProfile[]>([]);
+    const [round, setRound] = useState<number>(0);
 
     const [currentRound, setCurrentRound] = useState<GameRound | null>(null);
     const [gameData, setGameData] = useState<GameData | null>(null);
@@ -57,7 +60,12 @@ export default function SecuritySheriff() {
 
     const generateNewScript = useCallback(async () : Promise<GameRound | null>  => {
         console.log("Generating Script Data");
+
         if (state && state.language) {
+            if (state.debug) {
+                // load preloaded script from json file
+                return SCRIPT_MOCK_DATA[round % SCRIPT_MOCK_DATA.length];    
+            }
 
             const errorAmount = Math.floor(Math.random() * 5);
             console.log("Generating Script With " + errorAmount + " Errors");
@@ -74,7 +82,7 @@ export default function SecuritySheriff() {
                 }
                 return currentRoundData;                
             }
-        }
+        } 
         
         return null;
     }, [state]);
@@ -160,42 +168,38 @@ export default function SecuritySheriff() {
 
     useEffect(() => {
         async function init() {
-            // console.log("Loading API");
-
-            // const response = initalize_gemini_api();
-            // console.log(response);
-            // if (!response) {
-            //     console.error("Failed to initialize Gemini API");
-            //     return;
-            // }
-            // const res = await generate_townsfolk(10);
-            // const parsed = JSON.parse(res.response.text())["Townsfolk"]["people"];
-            // setTownFolks(parsed);
-
-            // const firstRound = await generateRound();
-
-            // setGameData({
-            // settings: state,
-            // townsfolk: parsed,
-            // rounds: [firstRound!]
-            // });
-
-            // console.log("API loaded");
-
             console.log("Loading API")
             initalize_gemini_api().then((response) => {
                 console.log("API loaded")
                 if (response) {
                     console.log("Generating townsfolk")
+
+                    if (state.debug) {
+                        generateRound().then((currentRoundData) => {
+                                console.log("Round generated")
+                                console.log(JSON.stringify(currentRoundData, null, 2));
+                                console.log(currentRoundData)
+                                const gameData : GameData = {
+                                    settings : state,
+                                    townsfolk : TOWNS_FOLK_MOCK_DATA,
+                                    rounds : [currentRoundData!]
+                                }
+
+                                setGameData(gameData);
+                                setCurrentRound(currentRoundData);
+                            })
+                        }
+
                     generate_townsfolk(10).then((res) => {
                         if(response){
                             console.log("Townsfolk generated")
                             const parsed = JSON.parse(res.response.text())["Townsfolk"]["people"];
-                            setTownFolks(parsed);
+                            console.log(JSON.stringify(parsed, null, 2));
                             console.log(parsed);      
                             
                             generateRound().then((currentRoundData) => {
                                 console.log("Round generated")
+                                console.log(JSON.stringify(currentRoundData, null, 2));
                                 console.log(currentRoundData)
                                 const gameData : GameData = {
                                     settings : state,
@@ -207,11 +211,10 @@ export default function SecuritySheriff() {
                                 setCurrentRound(currentRoundData);
                             })
                         }
-                    })
+                    });
                 }
             })
         }
-
         init();
     }, []); 
 
