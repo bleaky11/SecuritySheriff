@@ -3,6 +3,7 @@ import alien from "./assets/cowboyalien.png"
 import dedge from "./assets/DeadWatson.png"
 import sheriff from "./assets/ameeee.jpg"
 import cowboi from "./assets/cowboi.png"
+import cowboy from "./assets/cowboy-neutral.png"
 import redx from "./assets/redx.png"
 import "./App.css"
 import "./SecuritySheriff.css"
@@ -17,11 +18,10 @@ import { ScriptInterface } from "./components/script-components/script-interface
 
 // pregenerated data used in debug mode
 import {TOWNS_FOLK_MOCK_DATA, SCRIPT_MOCK_DATA} from "./data/mock-data.ts"
-
+import TownsFolkList from "./components/townsfolk-list/townsfolk-list.tsx"
 
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
-
 type RoundType = "Email" | "Script";
 
 export interface GameRound {
@@ -37,7 +37,6 @@ export interface GameData {
     townsfolk : CharacterProfile[]
 }
 
-
 export default function SecuritySheriff() {
 
     const [dialogue, setDialogue] = useState<string>("Howdy pardner");
@@ -49,7 +48,7 @@ export default function SecuritySheriff() {
     const [list, setList] = useState<string>("");
     const [listOpen, setOpen] = useState<boolean>(false);
     const [tabOne, setTab] = useState<boolean>(true);
-
+    
     const [round, setRound] = useState<number>(0);
 
     const [currentRound, setCurrentRound] = useState<GameRound | null>(null);
@@ -85,7 +84,7 @@ export default function SecuritySheriff() {
         } 
         
         return null;
-    }, [state]);
+    }, [round, state]);
 
     const generateNewEmail = useCallback(async () : Promise<GameRound | null> => {
         if (state && state.language && gameData) {
@@ -216,7 +215,7 @@ export default function SecuritySheriff() {
             })
         }
         init();
-    }, []); 
+    }, [generateRound, state]); 
 
 
     function verdictButton(){
@@ -237,7 +236,7 @@ export default function SecuritySheriff() {
                 <img src={alien} alt="alien" className="character" style={{bottom:"20%"}}/>
             )
         }else return (
-            <img src={cowboi} alt="cowboy" className="character"/>
+            <img src={cowboy} alt="cowboy" className="character" style = {{bottom: "30%"}}/>
         )
     }
 
@@ -252,27 +251,23 @@ export default function SecuritySheriff() {
         }
     ){
 
-        const [tab, setTab] = useState(false);
+        const [tab, setTab] = useState(true);
 
         return(
             <div className="sheriffList">
                 <button className={tab? "listTabs selected" : "listTabs"} onClick={()=>{setTab(true)}}>Outlaw Info</button>
                 <button className={tab? "listTabs" : "listTabs selected"} onClick={()=>{setTab(false)}}>Town Info</button>
-                {tab && <div className="Information">
+                {tab && <div className="script">
                     {(roundData === null) && <div> Round Data Loading </div>}
                     {(roundData !== null && roundData.type === "Email") && roundData.email !== undefined && <EmailViewer email={roundData.email}></EmailViewer> }
                     {(roundData !== null && roundData.type === "Script" && roundData.script !== undefined) && 
                         <div>
-                            <ScriptInterface script = {roundData.script}></ScriptInterface>
+                            <ScriptInterface setMessage={setDialogue} script = {roundData.script} ></ScriptInterface>
                         </div>
                     }
                 </div>}
                 {(!tab && gameData !== null) && <div className="Information">
-                    {gameData.townsfolk.map((folk, index) => (
-                        <div key={index}>
-                            <span> {folk.firstName} {folk.lastName} {folk.occupation} {folk.gender} </span>
-                        </div>
-                    ))}
+                    <TownsFolkList townsfolk={gameData.townsfolk} />
                 </div>}
             </div>
         )
@@ -292,19 +287,20 @@ export default function SecuritySheriff() {
     return (
         <div className="home">
             <img src={saloon} alt="Saloon" className="background"/>
-            {!alive && <img src={dedge} alt="dead" className={alive? "absolute" : "show absolute"}></img>}
-            {/* <TrueForm></TrueForm> */}
-            {alive && choice === `${"shoot"}` &&<img src={redx} alt="A big red x" className="character"></img>}
+            <TrueForm></TrueForm>
             <div className="interface">
                 <div className="dialogue">
-                    Howdy there stranger
+                    <p className = "dialogue-text">
+                        {dialogue}
+                    </p>
+
+                    <button className="verdict" onClick={openList}>Data</button>
+                    <button className="verdict" onClick={verdictButton}>verdict</button>
+                    {choice !== `${"idle"}` && <Verdict setDecision={setChoice}/>}
+
                 </div>
-                {!listOpen && <img src={sheriff} alt="sheriff" className="sheriff"></img>}
             </div>
-            {listOpen  && <SheriffList roundData={currentRound} gameData={gameData}/>}
-            <button className="verdict openList" onClick={openList}>Open List</button>
-            <button className="verdict" onClick={verdictButton}>verdict</button>
-            {choice !== `${"idle"}` && <Verdict setDecision={setChoice}/>}
+            <SheriffList roundData={currentRound} gameData={gameData}/>
         </div>
     )
 }

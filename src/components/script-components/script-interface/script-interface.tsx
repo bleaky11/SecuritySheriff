@@ -3,10 +3,12 @@ import type { Script, ScriptError } from "../../../data/models";
 import { CodeViewer } from "../code-view/code-view";
 
 export interface ScriptInterfaceProps {
-    script : Script
+    script : Script,
+    setMessage : (x : string) => void
+
 }
 
-export function ScriptInterface({script} : ScriptInterfaceProps) {
+export function ScriptInterface({script, setMessage} : ScriptInterfaceProps) {
     
     const [currentScript, setCurrentScript] = useState<Script>(script);
     const [debugMode, setDebugMode] = useState<boolean>(false);
@@ -14,14 +16,26 @@ export function ScriptInterface({script} : ScriptInterfaceProps) {
     const [lineInfo, setLineInfo] = useState<String>("");
     const [errorInfo, setErrorInfo] = useState<null | ScriptError>(null);
 
+    const generateMessage = (error : boolean) => {
+        if (error) {
+            setMessage("Oooooo you got my " + errorInfo?.errorType + " error")
+        } else {
+            setMessage("That isn't an error partner")
+        }
+    }
 
     return (
         <div>
-            <button onClick={() => setDebugMode(!debugMode)}>Toggle Debug Mode</button>
+            <div style = {{"display" : "flex", "justifyContent" : "center", "columnGap" : "10px"}}>
+                <h2> Objective: Check this script and see if anything <b> BUGS </b> you... </h2>
+                <button onClick={() => setDebugMode(!debugMode)}>Toggle Debug Mode</button>
+            </div>
             <CodeViewer 
                 script={currentScript}
                 setLineInfo={setLineInfo}
-                setErrorInfo={setErrorInfo} 
+                setErrorInfo={setErrorInfo}
+                generateMessage={generateMessage}
+                debug = {debugMode} 
             ></CodeViewer>
             {debugMode && 
                 <div> 
@@ -39,8 +53,6 @@ export function ScriptInterface({script} : ScriptInterfaceProps) {
             } 
 
             <div>   
-                <h2> Objective: Check this script and see if anything <b> BUGS </b> you... </h2>
-
                 {lineInfo !== "" && <h3> {lineInfo} </h3>}
 
                 {errorInfo !== null && 

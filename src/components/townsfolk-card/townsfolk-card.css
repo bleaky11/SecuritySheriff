@@ -1,0 +1,26 @@
+
+.tonwsfolk-card {
+    max-height: 125px;
+    width: 98%;
+
+    display: flex;
+    border: solid bisque;
+
+}
+
+.townsfolk-image {
+    width: 100px;
+}
+
+.townsfolk-card-info {
+    
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.label {
+    font-weight: 800;
+    color: rgb(80, 3, 3);
+}

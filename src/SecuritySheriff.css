@@ -1,5 +1,3 @@
-
-
 .game{
     display: absolute;
     border: 1px black solid;
@@ -8,26 +6,32 @@
 
 .dialogue{
     position: absolute;
-    width: 80vh;
-    height: 70%;
-    background-color: rgba(0, 55, 255, 0.38);
+    width: 100%;
+    height: 100%;
+    background-color: rgb(63, 43, 0);
     font-size: 2rem;
-    margin-left: 2%;
+}
+
+.dialogue-text {
+    padding-left: 35px;
+    text-align: start;
 }
 
 .interface{
     position: absolute;
     display: flex;
     width: 100vh;
-    height: 40vh;
+    height: 30vh;
     bottom:0%;
     font-size: 2rem;
     margin-left: 3%;
+    margin: 0;
+    padding: 0;
 }
 
 .character{
     position: absolute;
-    bottom: 10%;
+    bottom: 5%;
     left: 10%;
     width: 60vh;
     margin-left: 1%;
@@ -59,19 +63,13 @@
 }
 
 .verdict{
-    position: absolute;
-    bottom: 3%;
     border: 2px red solid;
     background-color: rgba(255, 25, 25, 0.47);
-    width: 10%;
-    height: 5%;
+    min-width: 150px;
+    height: 40px;
     padding-top: 0%;
-    margin-top: 0%;
-    left: 4%;
-}
-
-.openList{
-    left: 42%;
+    margin:0;
+    padding: 0; 
 }
 
 .verdictOverlay{
@@ -98,12 +96,13 @@
 
 .sheriffList{
     position: absolute;
-    right: 3%;
-    top: 6%;
+    right: 0;
+    top: 0%;
     border: 2px rgb(243, 167, 105) solid;
     background-color: white;
-    width: 44vw;
-    height: 81.5vh;
+    width: 50vw;
+    /* height: 81.5vh; */
+    height: 100%;
     justify-content: space-around;
 }
 
@@ -124,4 +123,14 @@
 
 .Information{
     color: black;
+    max-width: 95%;
+    height: 70vh;
+    overflow-y: auto;
+}
+
+.script {
+    color: black;
+    max-width: 100%;
+    height: 85vh;
+    overflow-y: auto;
 }
