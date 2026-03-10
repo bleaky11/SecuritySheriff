@@ -1,10 +1,9 @@
-import saloon from "./assets/wildwestindoors.jpg"
-import alien from "./assets/cowboyalien.png"
-import dedge from "./assets/DeadWatson.png"
-import sheriff from "./assets/ameeee.jpg"
-import cowboi from "./assets/cowboi.png"
+import saloon from "./assets/saloon.jpg"
+
+import fish from "./assets/cowboy-fish.png"
+import alien from "./assets/cowboy-alien.png"
 import cowboy from "./assets/cowboy-neutral.png"
-import redx from "./assets/redx.png"
+
 import "./App.css"
 import "./SecuritySheriff.css"
 import { useCallback, useEffect, useState } from "react"
@@ -20,9 +19,14 @@ import { ScriptInterface } from "./components/script-components/script-interface
 import {TOWNS_FOLK_MOCK_DATA, SCRIPT_MOCK_DATA} from "./data/mock-data.ts"
 import TownsFolkList from "./components/townsfolk-list/townsfolk-list.tsx"
 
-type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
+type outlawType = "Cowboy" | "alien" | "bandit" | "fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
 type RoundType = "Email" | "Script";
+
+const OUTLAW_IMAGES : Record<string, string> = {
+    "alien" : alien,
+    "fish" : fish
+};
 
 export interface GameRound {
     type : RoundType;
@@ -40,7 +44,7 @@ export interface GameData {
 export default function SecuritySheriff() {
 
     const [dialogue, setDialogue] = useState<string>("Howdy pardner");
-    const [outlawType, setOutlaw] = useState<outlawType>("Alien");
+    const [outlawType, setOutlaw] = useState<outlawType>("fish");
     const [showTrueForm, setForm] = useState<boolean>(false);
     const [alive, setAlive] = useState<boolean>(true);
     const [choice, setChoice] = useState<decision>("idle");
@@ -109,23 +113,6 @@ export default function SecuritySheriff() {
         return null;
     }, [gameData, state]);
 
-
-
-    // const generateRound = useCallback(async () => {
-
-    //     let currentRoundData : GameRound | null = null;
-
-    //     if (state.gameMode === "Script") {
-    //         currentRoundData = await generateNewScript();
-    //     } else {
-    //         currentRoundData = await generateNewEmail();
-    //     }
-
-    //     setCurrentRound(currentRoundData);
-
-    //     return currentRoundData;
-    // }, [currentRound, generateNewEmail, generateNewScript, state]);
-
     const generateRound = useCallback(async () => {
     if (state.gameMode === "Script") {
         return await generateNewScript();
@@ -133,37 +120,6 @@ export default function SecuritySheriff() {
         return await generateNewEmail();
     }
     }, [generateNewEmail, generateNewScript, state.gameMode]);
-
-    // useEffect(()=> {
-    //     console.log("Loading API")
-    //     initalize_gemini_api().then((response) => {
-    //         console.log("API loaded")
-    //         if (response) {
-    //             console.log("Generating townsfolk")
-    //             generate_townsfolk(10).then((res) => {
-    //                 if(response){
-    //                     console.log("Townsfolk generated")
-    //                     const parsed = JSON.parse(res.response.text())["Townsfolk"]["people"];
-    //                     setTownFolks(parsed);
-    //                     console.log(parsed);      
-                        
-    //                     generateRound().then((currentRoundData) => {
-    //                         console.log("Round generated")
-    //                         console.log(currentRoundData)
-    //                         const gameData : GameData = {
-    //                             settings : state,
-    //                             townsfolk : parsed,
-    //                             rounds : [currentRoundData!]
-    //                         }
-
-    //                         setGameData(gameData);
-    //                     })
-    //                 }
-    //             })
-    //         }
-    //     }
-    // )}, 
-    // [generateRound, state]);
 
     useEffect(() => {
         async function init() {
@@ -230,15 +186,6 @@ export default function SecuritySheriff() {
         setOpen(!listOpen);
     }
 
-    function TrueForm(){
-        if(showTrueForm && outlawType === "Alien"){
-            return (
-                <img src={alien} alt="alien" className="character" style={{bottom:"20%"}}/>
-            )
-        }else return (
-            <img src={cowboy} alt="cowboy" className="character" style = {{bottom: "30%"}}/>
-        )
-    }
 
     function SheriffList(
         {
@@ -287,17 +234,29 @@ export default function SecuritySheriff() {
     return (
         <div className="home">
             <img src={saloon} alt="Saloon" className="background"/>
-            <TrueForm></TrueForm>
+            <img 
+                src={showTrueForm ? OUTLAW_IMAGES[outlawType] : cowboy} 
+                alt="outlaw" 
+                className="character" 
+                style={{bottom:"30%"}}
+                onClick={() => {
+                    if (state.debug) {
+                        setForm(prev => !prev)
+                    }
+                }}    
+            />
+            
             <div className="interface">
                 <div className="dialogue">
                     <p className = "dialogue-text">
                         {dialogue}
                     </p>
-
-                    <button className="verdict" onClick={openList}>Data</button>
-                    <button className="verdict" onClick={verdictButton}>verdict</button>
-                    {choice !== `${"idle"}` && <Verdict setDecision={setChoice}/>}
-
+                    
+                    <div className = "button-container">
+                        <button className="interface-button" onClick={openList}>Data</button>
+                        <button className="interface-button" onClick={verdictButton}>verdict</button>
+                        {choice !== `${"idle"}` && <Verdict setDecision={setChoice}/>}
+                    </div>
                 </div>
             </div>
             <SheriffList roundData={currentRound} gameData={gameData}/>

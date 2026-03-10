@@ -9,16 +9,20 @@ export interface TownsFolkListProp {
 
 export default function TownsFolkList({townsfolk} : TownsFolkListProp) {
     return (
-        <div className = "towns-folk-list">
-            {
-                townsfolk.map((person, index) => {
-                    return (
-                        <TownsFolkCard townsFolk={person}/>
-                    )
-                }) 
-            }
+        <div className = "towns-folk-list-container">
+            <h1 className = "list-header"> Town Registry </h1>
+            <h2> Here is a list of all the townsfolk. This might help you out... </h2>
+            <div className = "towns-folk-list">
+                {
+                    townsfolk.map((person, index) => {
+                        return (
+                            <TownsFolkCard townsFolk={person}/>
+                        )
+                    }) 
+                }
 
 
+            </div>
         </div>
     )
 }
