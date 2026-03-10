@@ -23,6 +23,7 @@ import { passEnemy, SetPassTarget } from './Reducers/passSlice.tsx';
 import { SelectDifficulty, SelectBounty, SelectLanguage} from './Reducers/bountyDifficulty.tsx';
 
 import { finishGame } from './Reducers/endgameSlice.tsx';
+import { resetRound, incrementRound, startRound } from "./Reducers/roundSlice.tsx";
 
 export function useGameStateMachine() {
     const dispatch = useDispatch();
@@ -31,12 +32,18 @@ export function useGameStateMachine() {
     const startState = useAppSelector((state) => state.start.gameStarted);
     const investigateState = useAppSelector((state) => state.investigate.started);
     const selectionState = useAppSelector((state) => state.select.inSelection);
-    const settingsState = useAppSelector((state) => state.settings.settings);
+    const settingsObj = useAppSelector((state) => state.settings.settings);
     const endGameState = useAppSelector((state) => state.endGame.gameOver);
+    const roundState = useAppSelector((state) => state.round.roundStarted);
+    const roundCount = useAppSelector((state) => state.round.roundCount);
+    const investigationTarget = useAppSelector((state) => state.investigate.Entity);
+    const shootingTarget = useAppSelector((state) => state.shoot.Entity);
+    const passingTarget = useAppSelector((state) => state.pass.Entity);
+
 
     // 🔹 Action wrappers
     const StartGame = (change: boolean) => {
-        dispatch(startGame(change.valueOf()));
+        dispatch(startGame(change));
     };
 
     const StartSelection = (change: boolean) => {
@@ -87,12 +94,29 @@ export function useGameStateMachine() {
         dispatch(SelectLanguage(change));
     };
 
+    const StartRound = (change: boolean) => {
+        dispatch(startRound(change));
+    };
+
+    const IncrementRound = () => {
+        dispatch(incrementRound());
+    };
+
+    const ResetRound = () => {
+        dispatch(resetRound());
+    };
+
     return {
         startState,
         investigateState,
         selectionState,
         endGameState,
-        settingsState,
+        settingsObj,
+        roundState,
+        roundCount,
+        investigationTarget,
+        shootingTarget,
+        passingTarget,
         StartGame,
         StartSelection,
         StartInvestigate,
@@ -105,7 +129,10 @@ export function useGameStateMachine() {
         setPassTarget,
         selectDifficulty,
         selectBounty,
-        selectLanguage
+        selectLanguage,
+        StartRound,
+        IncrementRound,
+        ResetRound
     };
 }
 

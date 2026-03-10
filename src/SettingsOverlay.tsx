@@ -16,12 +16,12 @@ export default function SettingsOverlay({setOverlay}: input) {
 
     const [gameMode, setGameMode] = useState<gameMode | null>();
     const [chosenLanguage, setLanguage] = useState<language | null>();
+    const game = useGameStateMachine();
 
     function DifficultyButtons()
     {
-        const game = useGameStateMachine();
         
-        {console.log(game.settingsState)}
+        {console.log(game.settingsObj)}
 
         return (
              <div> 
@@ -42,8 +42,6 @@ export default function SettingsOverlay({setOverlay}: input) {
 
     function LanguageButtons()
     {
-        const game = useGameStateMachine();
-
         return (
              <div> 
                 <div className={"SQL"} onClick={()=>game.selectLanguage("SQL")}>SQL</div>
@@ -65,14 +63,14 @@ export default function SettingsOverlay({setOverlay}: input) {
                 <h2>Select Bounty</h2>
 
                 <div className = "choosing"> 
-                    <div className = {gameMode==="Script"? "chosen" :"poster"}  onClick={()=>{setGameMode("Script")}}
+                    <div className = {gameMode==="Script"? "chosen" :"poster"}  onClick={()=>{setGameMode("Script"); game.selectBounty("Script")}}
                     >  
                         <h3> Buggy Script  </h3>
                         <h4> There has been talk of beings going around trying to brainwash the townsfolk with alien scripts. Find them and bring them to justice </h4>
                         <b><span> (Test your debugging skills by seeing if a script has any bugs) </span></b>
                     </div>
 
-                    <div className = {gameMode==="Email"? "chosen" :"poster"} onClick={()=>{setGameMode("Email")}}
+                    <div className = {gameMode==="Email"? "chosen" :"poster"} onClick={()=>{setGameMode("Email"); game.selectBounty("Email")}}
                         >  
                         <h3> Fishy Email Bandits  </h3>
                         <h4> There have been a lot of fishy bandits trying to trick the townsfolk with their emails. Find them and bring them to justice</h4 >
@@ -93,7 +91,7 @@ export default function SettingsOverlay({setOverlay}: input) {
             </div>}
            
             <div className="buttonlayout">
-                <Link to={"/game"} className="button">Start</Link>
+                <Link to={"/game"} className="button" onClick={() => game.StartGame(true)}>Start</Link>
             </div>
         </div>
     )

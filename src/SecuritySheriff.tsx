@@ -9,6 +9,7 @@ import "./SecuritySheriff.css"
 import { useEffect, useState } from "react"
 
 import Verdict from "./verdict"
+import { Round } from "./gamelogic"
 
 type outlawType = "Cowboy" | "Alien" | "Bandit" | "Fish";
 type decision = "idle" | "deciding" | "pass" | "shoot";
@@ -88,6 +89,7 @@ export default function SecuritySheriff() {
             <button className="verdict openList" onClick={openList}>Open List</button>
             <button className="verdict" onClick={verdictButton}>verdict</button>
             {choice !== `${"idle"}` && <Verdict setDecision={setChoice}/>}
+            {<Round></Round>}
         </div>
     )
 }

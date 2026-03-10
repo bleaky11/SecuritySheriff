@@ -23,8 +23,7 @@ const passState = createSlice({
                 // may need to call other functions here
             }
             else {
-                state.Entity.health -= 4; // arbitrary value, I forgot there is no damage here
-                state.Entity = otherEntity;
+                state.Entity.health -= 2; // arbitrary value, I forgot there is no damage here
             }
             
         },

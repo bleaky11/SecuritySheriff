@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     started: false,
-    Entity: {name: "", health: 0, type: "Enemy"}
+    Entity: {name: "", health: 1, type: "Enemy"}
 };
 
 

@@ -21,15 +21,15 @@ const settingsState = createSlice({
     reducers: {
         SelectDifficulty: (state, action) =>
         {
-            state.settings.difficulty = action.payload.difficulty;
+            state.settings.difficulty = action.payload;
         },
         SelectBounty: (state, action) =>
         {
-            state.settings.bounty = action.payload.bounty;
+            state.settings.bounty = action.payload;
         },
         SelectLanguage: (state, action) =>
         {
-            state.settings.language = action.payload.language;
+            state.settings.language = action.payload;
         }
     }
 });
