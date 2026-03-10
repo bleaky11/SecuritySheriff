@@ -39,11 +39,11 @@ export function CodeViewer({script, setLineInfo, setErrorInfo, generateMessage} 
             {{
                 textAlign: 'left',      // Forces text to the left
                 margin: 0,               // Removes auto-centering margins
-                padding: '1rem',         // Standard spacing
                 overflowX: "auto",       // Allows horizontal scrolling for long lines
                 display: 'table',        // Ensures clickable lines span the full width
                 minWidth: '100%',        // Prevents shrinking if the code is short
             }}
+            className="code-view-container"
         >
             <Highlight theme={themes.nightOwl} code={currentScript.scriptContent} language={script.language}>
 
@@ -62,7 +62,7 @@ export function CodeViewer({script, setLineInfo, setErrorInfo, generateMessage} 
                         onClick={() => checkCodeLine(i + 1)} // Trigger your game event
                         style={{
                         cursor: 'pointer',
-                        backgroundColor: isSelected ? '#3e4451' : isError ? `#ff2020ab` : `transparent`,
+                        backgroundColor: isSelected ? '#d8a031' : isError ? `#ff2020ab` : `transparent`,
                         borderLeft: isSelected ? '4px solid #f99' : '4px solid transparent'
                         }}
                     >

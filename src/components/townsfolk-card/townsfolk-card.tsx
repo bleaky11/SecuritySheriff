@@ -19,7 +19,7 @@ export function TownsFolkCard({townsFolk} : TownsFolkCardProp) {
                 <span> <b className="label"> Email : </b> {townsFolk.email} </span>
                 <span> <b className="label"> Character Traits : </b> {
                     townsFolk.characterTraits.length > 2 ? 
-                        townsFolk.characterTraits.slice(1).join(",") + ", &" + townsFolk.characterTraits[townsFolk.characterTraits.length - 1] :
+                        townsFolk.characterTraits.slice(0, townsFolk.characterTraits.length - 1).join(",") + ", &" + townsFolk.characterTraits[townsFolk.characterTraits.length - 1] :
                         townsFolk.characterTraits[0] + " & " + townsFolk.characterTraits[1]
                     }
                 </span>

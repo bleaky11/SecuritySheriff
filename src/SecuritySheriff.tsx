@@ -208,7 +208,7 @@ export default function SecuritySheriff() {
                     {(roundData === null) && <div> Round Data Loading </div>}
                     {(roundData !== null && roundData.type === "Email") && roundData.email !== undefined && <EmailViewer email={roundData.email}></EmailViewer> }
                     {(roundData !== null && roundData.type === "Script" && roundData.script !== undefined) && 
-                        <div>
+                        <div className = "script-container">
                             <ScriptInterface setMessage={setDialogue} script = {roundData.script} ></ScriptInterface>
                         </div>
                     }

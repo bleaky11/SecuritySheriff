@@ -16,7 +16,7 @@
     padding: 10px 0 10px 30px;
     margin: 0;
     text-align: start;
-    height: 70%;
+    height: 60%;
 }
 
 .interface{
@@ -123,6 +123,8 @@
     /* height: 81.5vh; */
     height: 100%;
     justify-content: space-around;
+
+    background-color: tan;
 }
 
 .listTabs{
@@ -150,5 +152,9 @@
     color: black;
     max-width: 100%;
     height: 85vh;
-    overflow-y: auto;
+}
+
+.script-container{
+    height: 100%;
+    width: 100%;
 }

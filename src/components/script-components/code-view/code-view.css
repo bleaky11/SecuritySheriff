@@ -6,3 +6,11 @@
 .code-line-interactive:hover {
   background-color: rgba(206, 206, 206, 0.5) !important; /* Subtle highlight */
 }
+
+.code-view-container {
+    width: 100%;
+    height: 100%;    
+
+    overflow-y: auto;
+    overflow-x: auto;
+}
