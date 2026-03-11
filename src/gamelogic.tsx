@@ -1,6 +1,5 @@
 
 import { useEffect } from "react";
-import { useState } from "react"; 
 import { useGameStateMachine } from "./States/GameStates";
 
 
@@ -58,12 +57,16 @@ export function Round()
     let Damage = 2;
 
     useEffect(() => {
-        game.StartRound(true)
-        game.IncrementRound()
-        game.setShootTarget(sheriffEntity)
-        game.InvestigateTarget(Enemy)
-        game.StartInvestigate(true)
-        game.setDamage(Damage)
+        if (game.startState)
+        {
+            game.StartRound(true)
+            game.IncrementRound()
+            game.setShootTarget(sheriffEntity)
+            game.setPassTarget(sheriffEntity)
+            game.InvestigateTarget(Enemy)
+            game.StartInvestigate(true)
+            game.setDamage(Damage)
+        }
     }, [game.startState])
 
     useEffect(() => {
