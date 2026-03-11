@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import type { CharacterProfile } from "../data/models";
+import type { InterviewSubject } from "../SecuritySheriff";
 
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 let genAI = null;
@@ -120,7 +121,7 @@ export async function initalize_gemini_api(){
 }
 
 // make most of these parameters enums
-export async function generate_script(errors : numbers, difficulty : string, language : string) {
+export async function generate_script(errors : number, subject : InterviewSubject, difficulty : string, language : string) {
     if (!apiKey) {
         throw new Error("Gemini API key is not defined in environment variables.");
     }
@@ -129,8 +130,11 @@ export async function generate_script(errors : numbers, difficulty : string, lan
         throw new Error("Gemini API is not properly initalized");
     }
 
+    
+    // TODO fix prompt to generate emails.
     const response = await model.generateContent(
         (errors === 0 ? GENERATE_SCRIPT_WITHOUT_ERRORS : GENERATE_SCRIPT_WITH_ERRORS) 
+        + ` it should reference the content in ${subject.profile.characterTraits}`
         + ` it should contain ${errors} errors, be ${difficulty} difficulty and be written in ${language} programming language`
         +  JSON_SCRIPT_RESPONSE
     )
@@ -138,7 +142,7 @@ export async function generate_script(errors : numbers, difficulty : string, lan
     return response;
 }
 
-export async function generate_email(indicators : number, difficulty : string, townsFolk : CharacterProfile[]) {
+export async function generate_email(indicators : number, difficulty : string, townsFolk : InterviewSubject[]) {
 
     if (!apiKey) {
         throw new Error("Gemini API key is not defined in environment variables.");
@@ -156,7 +160,7 @@ export async function generate_email(indicators : number, difficulty : string, t
 
     console.log(personObj)
 
-    const filtered = townsFolk.filter(p => p.email !== personObj.email);
+    const filtered = townsFolk.filter(p => p.profile.email !== personObj.profile.email);
     const person2Obj = filtered[Math.floor(Math.random() * filtered.length)];
 
     console.log(person2Obj)
@@ -171,7 +175,6 @@ export async function generate_email(indicators : number, difficulty : string, t
     )
 
     console.log("email generated")
-
     return response;
 }
 

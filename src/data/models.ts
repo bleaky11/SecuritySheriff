@@ -55,5 +55,6 @@ export interface CharacterProfile {
     email : string,
     gender : Gender,
     occupation : string,
+    scriptErrorType : string[], // a set type of error this person never makes. Used as a hint in script 
     characterTraits : string[]
 }

@@ -33,7 +33,6 @@ export function ScriptInterface({roundInfo, townsfolk, setMessage} : ScriptInter
 
     ]
 
-
     const generateMessage = (error : boolean) => {
         if (error) {
             setMessage("Oooooo you got my " + errorInfo?.errorType + " error")

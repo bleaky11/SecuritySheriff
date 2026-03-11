@@ -74,7 +74,7 @@ export default function SecuritySheriff() {
             console.log("Generating Script With " + errorAmount + " Errors");
             
             // choose a random person
-            const availableSubjects = gameData.townsfolk.map(p => !p.interviewed); 
+            const availableSubjects = gameData.townsfolk.filter(p => !p.interviewed); 
             const subject = availableSubjects[Math.floor(Math.random() * (availableSubjects.length - 1))];
             
 
@@ -87,7 +87,8 @@ export default function SecuritySheriff() {
                 const currentRoundData : GameRound = {
                     type : "Script",
                     script : parsedScript,
-                    malicious : errorAmount > 0
+                    malicious : errorAmount > 0,
+                    subject : subject
                 }
                 return currentRoundData;                
             }
@@ -106,10 +107,25 @@ export default function SecuritySheriff() {
                 const rawJsonString = res.response.text();
                 const parsedEmail = JSON.parse(rawJsonString);
 
+                const person = JSON.stringify(personObj);
+                const person2 = JSON.stringify(person2Obj);
+
                 const currentRoundData : GameRound = {
                     type : "Email",
                     email : parsedEmail,
-                    malicious : errorAmount > 0
+                    malicious : errorAmount > 0,
+                    subject : {
+                        "profile" : { 
+                            "characterTraits" : [],
+                            'email' : "",
+                            'firstName' : "",
+                            'gender' : "Female",
+                            'lastName' : "",
+                            'occupation' : "",
+                            'scriptErrorType' : [] 
+                        },
+                        "interviewed" : false
+                    }
                 }
                 
                 return currentRoundData;
