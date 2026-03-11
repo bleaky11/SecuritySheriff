@@ -1,23 +1,38 @@
 import { useState } from "react";
-import type { Script, ScriptError } from "../../../data/models";
+import type { CharacterProfile, Script, ScriptError } from "../../../data/models";
 import { CodeViewer } from "../code-view/code-view";
 
 import './script-interface.css'
 import { Group, Panel } from "react-resizable-panels";
+import type { GameRound, InterviewSubject } from "../../../SecuritySheriff";
+import { ScriptDetailTab } from "./script-details-tab/script-details-tab";
+import { OverviewTab } from "../../overview-tab/overview";
+import TownsFolkList from "../../townsfolk-list/townsfolk-list";
 
 export interface ScriptInterfaceProps {
-    script : Script,
+    roundInfo : GameRound,
+    townsfolk : InterviewSubject[],
     setMessage : (x : string) => void
 
 }
 
-export function ScriptInterface({script, setMessage} : ScriptInterfaceProps) {
+export function ScriptInterface({roundInfo, townsfolk, setMessage} : ScriptInterfaceProps) {
     
-    const [currentScript, setCurrentScript] = useState<Script>(script);
+    const [currentScript, setCurrentScript] = useState<Script | undefined>(roundInfo.script);
     const [debugMode, setDebugMode] = useState<boolean>(false);
     
-    const [lineInfo, setLineInfo] = useState<String>("");
+    const [lineInfo, setLineInfo] = useState<string>("");
     const [errorInfo, setErrorInfo] = useState<null | ScriptError>(null);
+
+    const [currentTab, setCurrentTab] = useState<number>(0);
+
+    const TAB_COMPONENTS = [
+        <OverviewTab/>,
+        <ScriptDetailTab script={currentScript} roundInfo={roundInfo}/>,
+        <TownsFolkList townsfolk={townsfolk} />
+
+    ]
+
 
     const generateMessage = (error : boolean) => {
         if (error) {
@@ -26,6 +41,14 @@ export function ScriptInterface({script, setMessage} : ScriptInterfaceProps) {
             setMessage("That isn't an error partner")
         }
     }
+
+    if (currentScript === undefined) {
+        // replace with loading component
+        return <div> loading script </div>
+    }
+
+
+    const activeTab = TAB_COMPONENTS[currentTab];
 
     return (
         <div className = "script-interface-container">
@@ -54,10 +77,17 @@ export function ScriptInterface({script, setMessage} : ScriptInterfaceProps) {
                     </div>
                 </Panel>
                 <Panel>
-                    <div className = "script-interface-details"> 
-                        <h2>Script Details</h2>
-                        <p> {currentScript.context} </p>
-                    </div>
+                    <div className = "script-interface-details">
+                        <div className = "script-interface-details-tabs"> 
+                            <button onClick={() => setCurrentTab(0)}> Overview </button>
+                            <button onClick={() => setCurrentTab(1)}> Script Details </button>
+                            <button onClick={() => setCurrentTab(2)}> Town Registry </button>
+                        </div>
+                        <div className="script-interface-details-content">
+                            {activeTab}
+                        </div>
+
+                    </div>  
                 </Panel>
             </Group>
             

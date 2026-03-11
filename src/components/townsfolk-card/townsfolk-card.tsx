@@ -3,12 +3,16 @@ import type { CharacterProfile } from "../../data/models";
 import cowboy from "../../assets/cowboy.png"
 
 import "./townsfolk-card.css"
+import type { InterviewSubject } from "../../SecuritySheriff";
+import { useState } from "react";
 
 export interface TownsFolkCardProp {
-    townsFolk : CharacterProfile 
+    subject : InterviewSubject 
 }
 
-export function TownsFolkCard({townsFolk} : TownsFolkCardProp) {
+export function TownsFolkCard({subject} : TownsFolkCardProp) {
+
+    const [townsFolk] = useState<CharacterProfile>(subject.profile)
 
     return (
         <div className = "tonwsfolk-card">

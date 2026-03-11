@@ -1,10 +1,10 @@
-import type { CharacterProfile } from "../../data/models";
+import type { InterviewSubject } from "../../SecuritySheriff";
 import { TownsFolkCard } from "../townsfolk-card/townsfolk-card";
 
 import "./townsfolk-list.css"
 
 export interface TownsFolkListProp {
-    townsfolk : CharacterProfile[]
+    townsfolk : InterviewSubject[]
 }
 
 export default function TownsFolkList({townsfolk} : TownsFolkListProp) {
@@ -14,9 +14,9 @@ export default function TownsFolkList({townsfolk} : TownsFolkListProp) {
             <h2> Here is a list of all the townsfolk. This might help you out... </h2>
             <div className = "towns-folk-list">
                 {
-                    townsfolk.map((person, index) => {
+                    townsfolk.map((subject, index) => {
                         return (
-                            <TownsFolkCard townsFolk={person}/>
+                            <TownsFolkCard subject={subject}/>
                         )
                     }) 
                 }
