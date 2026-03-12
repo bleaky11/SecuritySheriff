@@ -12,11 +12,11 @@ import TownsFolkList from "../../townsfolk-list/townsfolk-list";
 export interface ScriptInterfaceProps {
     roundInfo : GameRound,
     townsfolk : InterviewSubject[],
-    setMessage : (x : string) => void
-
+    setMessage : (x : string) => void,
+    lineClickedEvent  : (scriptError : ScriptError | undefined) => void
 }
 
-export function ScriptInterface({roundInfo, townsfolk, setMessage} : ScriptInterfaceProps) {
+export function ScriptInterface({roundInfo, townsfolk, setMessage, lineClickedEvent} : ScriptInterfaceProps) {
     
     const [currentScript, setCurrentScript] = useState<Script | undefined>(roundInfo.script);
     const [debugMode, setDebugMode] = useState<boolean>(false);
@@ -34,11 +34,14 @@ export function ScriptInterface({roundInfo, townsfolk, setMessage} : ScriptInter
     ]
 
     const generateMessage = (error : boolean) => {
-        if (error) {
-            setMessage("Oooooo you got my " + errorInfo?.errorType + " error")
-        } else {
-            setMessage("That isn't an error partner")
-        }
+
+        lineClickedEvent(errorInfo === null ? undefined : errorInfo);
+
+        // if (error) {
+        //     setMessage("Oooooo you got my " + errorInfo?.errorType + " error")
+        // } else {
+        //     setMessage("That isn't an error partner")
+        // }
     }
 
     if (currentScript === undefined) {

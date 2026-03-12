@@ -16,11 +16,12 @@ const JSON_MESSAGE_RESPONSE = `
 `
 
 const GENERATE_SCRIPT_WITH_ERRORS = `
-    generate a programming script of some function or code with an error in of either syntatical, logical, or security errors in them 
-    and give a detailed description of the context of the code so the errors make sense. 
-    Some comments are okay but not too many.
+    generate a programming script of some function or code with an errors and indicators that act in contradicted  to the provided townsfolk data.
+    Give a detailed description of the context of the code so the errors make sense. 
     Also make sure when noting what lines the error is on it is the actual line where code should be added/replaced not the one below or above
     The script can have a max of 30 ish lines (not including import statements just function body)
+
+    The script's content should cover a range of topics, but largely be based on the provided character profile and their tendencies.
 `
 
 const GENERATE_SCRIPT_WITHOUT_ERRORS = `
@@ -35,7 +36,7 @@ const JSON_SCRIPT_RESPONSE = `
     
     ScriptError {
         line : a number representing the line the error is on,
-        description : a detailed description of why this line contains an error,
+        description : a detailed description of why this line contains an error and what tendency does it contradict,
         fix : a detailed description of how to fix this error,
         errorType : whether the error is of type "syntax", "logic", or "security";
     }
@@ -86,6 +87,7 @@ const JSON_TOWNSFOLK_RESPONSE = `
         email : email of towns folk which is some combination of the first and last name with some random digits
         gender : gender of towns folk that matches name
         occupation : occupation of towns folk that matches wild west theme (do not choose sheriff or outlaw as occupations)
+        indroduction : a line of dialogue that the towns folk would say when you first meet them that gives a bit of context about who they are (brief, 1-2 sentences)
         characterTraits : a list of 3-5 unique character traits as strings
     }
 
@@ -97,6 +99,19 @@ const JSON_TOWNSFOLK_RESPONSE = `
 const GENERATE_TOWNSFOLK = `
     generate a list of towns folk that matches the wild west theme, make them a diverse cast of characters
 `
+
+const GENERATE_CHARACTER_SCRIPT_PROMPT = (character : CharacterProfile, ) => {
+    return ` Given the towns person ${character.firstName} ${character.lastName} who is a ${character.occupation} and has character traits such as ${character.characterTraits.join(", ")}.
+    and has tendencies such as
+    experience : ${character.scriptTendencies.experience},
+    codingStyle : ${character.scriptTendencies.codingStyle},
+    domainFocus : ${character.scriptTendencies.domainFocus},
+    languageHabits : ${character.scriptTendencies.languageHabits},
+    personalQuirks : ${character.scriptTendencies.personalQuirks},
+    errorTendencies : ${character.scriptTendencies.errorTendencies},
+    architectureTendencies : ${character.scriptTendencies.architectureTendencies},
+    debuggingHabits : ${character.scriptTendencies.debuggingHabits}`   
+}
 
 export async function initalize_gemini_api(){
     if (!apiKey) {
@@ -130,12 +145,12 @@ export async function generate_script(errors : number, subject : InterviewSubjec
         throw new Error("Gemini API is not properly initalized");
     }
 
-    
+
     // TODO fix prompt to generate emails.
     const response = await model.generateContent(
+        GENERATE_CHARACTER_SCRIPT_PROMPT(subject.profile) + 
         (errors === 0 ? GENERATE_SCRIPT_WITHOUT_ERRORS : GENERATE_SCRIPT_WITH_ERRORS) 
-        + ` it should reference the content in ${subject.profile.characterTraits}`
-        + ` it should contain ${errors} errors, be ${difficulty} difficulty and be written in ${language} programming language`
+        + ` it should contain ${errors + 1} errors, be ${difficulty} difficulty to detect and be written in ${language} programming language`
         +  JSON_SCRIPT_RESPONSE
     )
 

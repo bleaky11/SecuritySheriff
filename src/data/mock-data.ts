@@ -1,232 +1,117 @@
 import type { GameRound } from "../SecuritySheriff";
-import type { CharacterProfile } from "./models";
+import { generateTendencies, type CharacterProfile, type Script } from "./models";
 
 export const TOWNS_FOLK_MOCK_DATA : CharacterProfile[] = [
   {
-    "firstName": "Caleb",
-    "lastName": "Miller",
-    "email": "caleb.miller42@mail.com",
-    "gender": "Male",
-    "occupation": "Saddlemaker",
-    "characterTraits": [
-      "Stoic",
-      "Observant",
-      "Skilled",
-      "Grumpy"
-    ]
-  },
-  {
-    "firstName": "Isabella",
-    "lastName": "De La Rosa",
-    "email": "idelarosa88@mail.com",
-    "gender": "Female",
-    "occupation": "Saloon Owner",
-    "characterTraits": [
-      "Charismatic",
-      "Sharp-witted",
-      "Protective",
-      "Ambitious"
-    ]
-  },
-  {
-    "firstName": "Thaddeus",
-    "lastName": "Weaver",
-    "email": "thadweaver33@mail.com",
+    "firstName": "Silas",
+    "lastName": "Thorne",
+    "email": "silas.thorne88@frontier.com",
     "gender": "Male",
     "occupation": "Undertaker",
+    "introduction": "Welcome to my shop, traveler. I suggest you stay out of trouble, unless you want to be my next measurement for a pine box.",
     "characterTraits": [
-      "Morbid",
+      "Somber",
       "Meticulous",
-      "Soft-spoken"
-    ]
+      "Punctual",
+      "Observant"
+    ],
+    "scriptTendencies" : generateTendencies()
   },
   {
-    "firstName": "Li",
-    "lastName": "Wei",
-    "email": "liwei99@mail.com",
-    "gender": "Male",
-    "occupation": "Herbalist",
+    "firstName": "Abilene",
+    "lastName": "Miller",
+    "email": "abby.miller45@dustymail.com",
+    "gender": "Female",
+    "occupation": "Saloon Owner",
+    "introduction": "Thirsty? Grab a stool at the Birdcage, but keep your hands where I can see 'em if you're looking for more than a drink.",
     "characterTraits": [
-      "Wise",
-      "Patient",
       "Resilient",
-      "Knowledgeable"
-    ]
+      "Shrewd",
+      "Charismatic",
+      "Protective"
+    ],
+    "scriptTendencies" : generateTendencies()
   },
   {
-    "firstName": "Sarah",
-    "lastName": "Blackwood",
-    "email": "sblackwood12@mail.com",
-    "gender": "Female",
-    "occupation": "Blacksmith",
-    "characterTraits": [
-      "Strong",
-      "Honest",
-      "Loud",
-      "Determined"
-    ]
-  },
-  {
-    "firstName": "Elias",
-    "lastName": "Thorne",
-    "email": "ethorne77@mail.com",
+    "firstName": "Wei",
+    "lastName": "Zhang",
+    "email": "wei.zhang19@ironroad.com",
     "gender": "Male",
-    "occupation": "Telegraph Operator",
+    "occupation": "Railroad Engineer",
+    "introduction": "The iron horse doesn't wait for any man, and neither do I. We have five miles of track to lay before the sun sets.",
     "characterTraits": [
-      "Anxious",
-      "Fast-fingered",
-      "Gossipy",
-      "Intelligent"
-    ]
-  },
-  {
-    "firstName": "Abigail",
-    "lastName": "Jenkins",
-    "email": "ma.jenkins45@mail.com",
-    "gender": "Female",
-    "occupation": "Schoolteacher",
-    "characterTraits": [
-      "Nurturing",
-      "Strict",
-      "Intellectual",
+      "Hardworking",
       "Disciplined",
-      "Idealistic"
-    ]
-  },
-  {
-    "firstName": "Samuel",
-    "lastName": "Rivers",
-    "email": "srivers21@mail.com",
-    "gender": "Male",
-    "occupation": "Barber",
-    "characterTraits": [
-      "Talkative",
-      "Steady-handed",
-      "Friendly"
-    ]
+      "Stoic",
+      "Visionary"
+    ],
+    "scriptTendencies" : generateTendencies()
   },
   {
     "firstName": "Clementine",
     "lastName": "Dubois",
-    "email": "cdubois64@mail.com",
+    "email": "clem.dubois72@prairieschool.org",
     "gender": "Female",
-    "occupation": "Dressmaker",
+    "occupation": "Schoolmarm",
+    "introduction": "Education is the only thing that will keep this territory from tearing itself apart. Mind your manners and your grammar in my classroom.",
     "characterTraits": [
-      "Elegant",
-      "Creative",
-      "Perfectionist",
-      "Resourceful"
-    ]
+      "Idealistic",
+      "Stern",
+      "Intellectual",
+      "Compassionate"
+    ],
+    "scriptTendencies" : generateTendencies()
   },
   {
-    "firstName": "Silas",
-    "lastName": "Vance",
-    "email": "svance10@mail.com",
+    "firstName": "Mateo",
+    "lastName": "Salazar",
+    "email": "mateo.salazar03@anvilwest.com",
     "gender": "Male",
-    "occupation": "Piano Player",
+    "occupation": "Blacksmith",
+    "introduction": "If it is made of iron and broken, I am the man to fix it. Just don't expect a discount for your fancy silver spurs.",
     "characterTraits": [
-      "Melancholic",
-      "Talented",
-      "Nostalgic",
-      "Witty",
-      "Solitary"
-    ]
+      "Strong",
+      "Gruff",
+      "Honest",
+      "Reliable"
+    ],
+    "scriptTendencies" : generateTendencies()
   }
 ]
 
-export const SCRIPT_MOCK_DATA  : GameRound[] = [
+
+export const SCRIPT_MOCK_DATA : Script[] = [
+  {
+  "containsError": true,
+  "scriptContent": "def calculateSaloonLedger(inventoryData, patronRecords, taxRate):\n    print(\"DEBUG: Starting ledger calculation...\")\n\n    tax_adjusted_total = 0.0\n\n    # Abilene usually writes procedural loops but uses functional here\n    processedInventory = list(map(lambda x: x[\"price\"] * 0.9, filter(lambda x: x is not None, inventoryData)))\n\n    for item in inventoryData:\n        # She usually forgets null checks but includes one here\n        if item is None or \"id\" not in item:\n            continue\n\n        print(f\"DEBUG: Checking patron history for {item['id']}\")\n\n        # Performance nerd would use a map, but she uses a nested loop here\n        for patron in patronRecords:\n            if patron.get(\"favorite_drink_id\") == item[\"id\"]:\n                item[\"loyalty_weight\"] = patron[\"points\"] / 100\n\n    print(\"DEBUG: Finalizing totals\")\n    return sum(processedInventory)",
+  "scriptLineLength": 22,
+  "errors": [
     {
-        "type": "Script",
-        "script": 
-            {
-            "containsError": true,
-            "scriptContent": "def process_transaction(db_path, sender_id, receiver_id, amount):\n    conn = sqlite3.connect(db_path)\n    cursor = conn.cursor()\n    try:\n        # Validate amount\n        if amount <= 0:\n            return False\n\n        # Fetch sender balance\n        query = f\"SELECT balance FROM accounts WHERE id = '{sender_id}'\"\n        cursor.execute(query)\n        result = cursor.fetchone()\n        if not result or result[0] < amount:\n            return False\n\n        # Deduct from account\n        cursor.execute(\"UPDATE accounts SET balance = balance - ? WHERE id = ?\", (amount, receiver_id))\n        cursor.execute(\"UPDATE accounts SET balance = balance + ? WHERE id = ?\", (amount, receiver_id))\n\n        conn.commit()\n        return True\n    finally:\n        conn.close()\n    except sqlite3.Error as e:\n        print(f\"Database error: {e}\")\n        return False",
-            "scriptLineLength": 26,
-            "language": "Python",
-            "context": "This script manages a balance transfer between two bank accounts stored in a SQLite database. It verifies that the transfer amount is positive, checks if the sender has sufficient funds, and then performs two database updates to subtract funds from the sender and add them to the receiver. It uses a try-finally-except structure to ensure the database connection is closed regardless of success.",
-            "errors": [
-                {
-                "line": 10,
-                "description": "The query is constructed using a Python f-string which directly embeds the 'sender_id' variable. This creates a critical security vulnerability known as SQL Injection, allowing a user to manipulate the SQL statement by providing malicious input as the sender_id.",
-                "fix": "Use parameterized queries. Instead of building the string manually, use the '?' placeholder: query = 'SELECT balance FROM accounts WHERE id = ?' and then pass the variable as a tuple: cursor.execute(query, (sender_id,)).",
-                "errorType": "security"
-                },
-                {
-                "line": 17,
-                "description": "This is a logical error where the code deducts the amount from the 'receiver_id' instead of the 'sender_id'. As a result, the person meant to receive money actually pays it, and the sender's balance remains unchanged.",
-                "fix": "Change the second parameter in the execute call from 'receiver_id' to 'sender_id' to ensure the deduction happens on the correct account.",
-                "errorType": "logic"
-                },
-                {
-                "line": 24,
-                "description": "In Python, the 'except' block must precede the 'finally' block. Placing an 'except' block after a 'finally' block for the same 'try' statement is syntactically invalid and will result in a SyntaxError.",
-                "fix": "Move the 'except' block (lines 24-26) to appear immediately after the 'try' block and before the 'finally' block.",
-                "errorType": "syntax"
-                }
-            ]
-            },
-        "malicious": true
+      "line": 4,
+      "description": "The variable 'tax_adjusted_total' uses snake_case naming. This contradicts Abilene's personal quirk of using camelCase_naming for all her variables.",
+      "fix": "Rename the variable to 'taxAdjustedTotal' to align with her camelCase_naming quirk.",
+      "errorType": "logic"
     },
     {
-        "type": "Script",
-        "script": {
-            "containsError": true,
-            "scriptContent": "import sqlite3\nimport pickle\nimport base64\n\ndef get_user_data(db_connection, user_id, cache={}):\n    if user_id in cache:\n        return cache[user_id]\n\n    cursor = db_connection.cursor()\n    query = \"SELECT * FROM users WHERE id = '\" + user_id + \"'\"\n    cursor.execute(query)\n    user_record = cursor.fetchone()\n\n    if not user_record\n        return None\n\n    # Deserializing session metadata provided by the user client-side\n    session_blob = user_record[4]\n    try:\n        session_data = pickle.loads(base64.b64decode(session_blob))\n    except Exception:\n        session_data = {}\n\n    cache[user_id] = {\"info\": user_record, \"session\": session_data}\n    return cache[user_id]",
-            "scriptLineLength": 25,
-            "language": "Python",
-            "context": "This function is designed to fetch user records from a database and cache them in memory to improve performance. It also handles the deserialization of a session blob stored in the database, which is originally provided by the client. The system expects the 'user_id' to be a string and the database to have a specific schema where index 4 of the user record contains base64 encoded session data.",
-            "errors": [
-            {
-                "line": 5,
-                "description": "The function uses a mutable default argument 'cache={}'. In Python, default arguments are evaluated only once at definition time, meaning this dictionary is shared across all calls to the function.",
-                "fix": "Change the default argument to 'None' and initialize the dictionary inside the function body: 'if cache is None: cache = {}'.",
-                "errorType": "logic"
-            },
-            {
-                "line": 10,
-                "description": "The code uses string concatenation to build a SQL query with user-provided input. This makes the application vulnerable to SQL Injection attacks.",
-                "fix": "Use parameterized queries: 'cursor.execute(\"SELECT * FROM users WHERE id = ?\", (user_id,))'.",
-                "errorType": "security"
-            },
-            {
-                "line": 14,
-                "description": "The 'if' statement is missing the required colon at the end of the line, which will lead to a syntax error.",
-                "fix": "Add a colon at the end of the line: 'if not user_record:'.",
-                "errorType": "syntax"
-            },
-            {
-                "line": 20,
-                "description": "The function uses 'pickle.loads' on data that originates from client-side input. This is a critical security vulnerability because an attacker can craft a malicious pickle payload to execute arbitrary code on the server.",
-                "fix": "Use a safe serialization format like JSON (json.loads) instead of pickle for any data that could be influenced by a user.",
-                "errorType": "security"
-            }
-            ]
-        },
-        "malicious": true
+      "line": 7,
+      "description": "The implementation uses functional programming patterns (map and lambda). This contradicts Abilene's languageHabits as a procedural_programmer, who would typically write out explicit loop logic.",
+      "fix": "Replace the functional map/filter block with a procedural for-loop that appends calculated values to a list.",
+      "errorType": "logic"
     },
     {
-        "type": "Script",
-        "script": {
-            "containsError": true,
-            "scriptContent": "def update_employee_records(records, updates, auth_token=\"DEVPASS123\"):\n    \"\"\"\n    Synchronizes employee salary data from an external source.\n    \"\"\"\n    if auth_token != \"DEVPASS123\":\n        return \"Unauthorized\"\n\n    for emp_id, salary in updates:\n        if emp_id not in records:\n            continue\n\n        # Check if the salary is actually different before updating\n        if records[emp_id]['salary'] is salary:\n            continue\n\n        records[emp_id]['salary'] = salary\n\n    return records",
-            "scriptLineLength": 18,
-            "errors": [
-            {
-                "line": 1,
-                "description": "The function defines a sensitive authentication token ('DEVPASS123') as a hardcoded default parameter value in the function signature.",
-                "fix": "Remove the hardcoded secret from the function signature. Instead, retrieve the authentication token from a secure environment variable or a configuration management system using 'os.getenv()' during the function's execution.",
-                "errorType": "security"
-            },
-            {
-                "line": 13,
-                "description": "The script uses the 'is' operator to compare numeric values (salaries). In Python, 'is' checks for object identity (memory address) rather than value equality. While this may happen to work for small integers cached by CPython, it will fail for larger integers or floating-point numbers, causing the system to update records even when the values are identical.",
-                "fix": "Replace the 'is' identity operator with the '==' equality operator to correctly compare the numeric values of the records.",
-                "errorType": "logic"
-            }
-            ],
-            "language": "python",
-            "context": "This script is part of a high-frequency financial data synchronization service. It accepts a dictionary representing current employee records and a list of tuples containing employee IDs and their updated salary figures. The function is designed to only update records if the authentication token is valid and only if the salary has actually changed from its current state, aimed at minimizing unnecessary database write operations."
-        },
-        "malicious": true
+      "line": 11,
+      "description": "The presence of a defensive null check and safety 'in' check contradicts Abilene's established errorTendencies of 'missing_null_checks'.",
+      "fix": "Remove the safety check to reflect her self-taught, resilient but sometimes careless coding style regarding object existence.",
+      "errorType": "logic"
+    },
+    {
+      "line": 17,
+      "description": "This line initiates a nested O(n*m) loop to look up patron data. This contradicts Abilene's domainFocus as a 'performance_nerd'. A performance-focused hacker would have pre-indexed patronRecords into a dictionary for O(1) lookups.",
+      "fix": "Convert the patronRecords list into a dictionary keyed by 'favorite_drink_id' before the main loop to optimize the search complexity.",
+      "errorType": "logic"
     }
-];
+  ],
+  "language": "python",
+  "context": "Abilene Miller is managing her saloon's books using a script she wrote herself. The function is designed to adjust inventory values for taxes and link patron loyalty points to specific stock items. While the script is monolithic and uses print debugging (fitting her character), certain structural choices and naming conventions in this specific version deviate from her established profile as a performance-obsessed, procedural, camelCase-using hacker."
+}
+]
