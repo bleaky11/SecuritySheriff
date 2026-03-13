@@ -8,27 +8,32 @@ export interface CodeViewerProps {
     debug : boolean,
     script : Script,
     setLineInfo : (message : string) => void,
-    setErrorInfo : (scriptError : ScriptError) => void,
-    generateMessage : (error : boolean) => void
+    setErrorInfo : (scriptError : ScriptError | null) => void,
+    clickedLine : (error : ScriptError | undefined) => void
 }
 
-export function CodeViewer({script, setLineInfo, setErrorInfo, generateMessage} : CodeViewerProps) {
+export function CodeViewer({script, setLineInfo, setErrorInfo, clickedLine} : CodeViewerProps) {
     const [currentScript, setCurrentScript] = useState<Script>(script);
     const [selectedLine, setSelectedLine] = useState<null | number>(null);
 
     const checkCodeLine = (line : number) => {
 
+        console.log("line " + line);
+
         const isError = currentScript.errors.filter((error) => {
             return error.line === line;
         })
 
+        console.log(isError);
+
         if (isError.length === 0) {
             setLineInfo(`Line ${line} is not an error`);
-            generateMessage(false);
+            setErrorInfo(null)
+            clickedLine(undefined);
         } else {
             setLineInfo(`Error found on line ${line}`);
             setErrorInfo(isError[0]);
-            generateMessage(true);
+            clickedLine(isError[0]);
         }
 
     }

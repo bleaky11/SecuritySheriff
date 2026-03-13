@@ -33,15 +33,8 @@ export function ScriptInterface({roundInfo, townsfolk, setMessage, lineClickedEv
 
     ]
 
-    const generateMessage = (error : boolean) => {
-
-        lineClickedEvent(errorInfo === null ? undefined : errorInfo);
-
-        // if (error) {
-        //     setMessage("Oooooo you got my " + errorInfo?.errorType + " error")
-        // } else {
-        //     setMessage("That isn't an error partner")
-        // }
+    const clickedLine = (error : ScriptError | undefined) => {
+        lineClickedEvent(error);
     }
 
     if (currentScript === undefined) {
@@ -73,7 +66,7 @@ export function ScriptInterface({roundInfo, townsfolk, setMessage, lineClickedEv
                             script={currentScript}
                             setLineInfo={setLineInfo}
                             setErrorInfo={setErrorInfo}
-                            generateMessage={generateMessage}
+                            clickedLine={clickedLine}
                             debug = {debugMode} 
                         ></CodeViewer>
                     </div>
